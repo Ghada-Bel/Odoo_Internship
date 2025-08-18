@@ -1,20 +1,125 @@
 <odoo>
-  <template id="references_step">
-    <div class="row">
-      <div class="col-md-4">
-        <label class="form-label">Reference Name</label>
-        <input class="form-control" type="text" name="ref_name"
-               t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].name) or ''"/>
+  <template id="references_step" name="References Step">
+    <div class="step-content" data-step="references">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">References</h4>
+          <p class="text-muted mb-4">Please provide at least one professional reference. This step is optional but recommended.</p>
+        </div>
       </div>
-      <div class="col-md-4">
-        <label class="form-label">Company/Organization</label>
-        <input class="form-control" type="text" name="ref_company"
-               t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].company) or ''"/>
+      
+      <div class="reference-entry border rounded p-3 mb-3">
+        <h6 class="mb-3">Reference 1</h6>
+        <div class="row">
+          <!-- Reference Name -->
+          <div class="col-md-6 mb-3">
+            <label for="ref_name" class="form-label">Reference Name</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-user"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="ref_name" 
+                     name="ref_name" 
+                     placeholder="Full Name"
+                     t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].name) or ''"/>
+            </div>
+          </div>
+          
+          <!-- Company -->
+          <div class="col-md-6 mb-3">
+            <label for="ref_company" class="form-label">Company/Organization</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-building"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="ref_company" 
+                     name="ref_company" 
+                     placeholder="Company Name"
+                     t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].company) or ''"/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <!-- Phone -->
+          <div class="col-md-6 mb-3">
+            <label for="ref_phone" class="form-label">Phone</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-phone"></i></span>
+              <input type="tel" 
+                     class="form-control" 
+                     id="ref_phone" 
+                     name="ref_phone" 
+                     placeholder="+263 xxx xxx xxx"
+                     t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].phone) or ''"/>
+            </div>
+          </div>
+          
+          <!-- Email -->
+          <div class="col-md-6 mb-3">
+            <label for="ref_email" class="form-label">Email</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+              <input type="email" 
+                     class="form-control" 
+                     id="ref_email" 
+                     name="ref_email" 
+                     placeholder="reference@company.com"
+                     t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].email) or ''"/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <!-- Position/Title -->
+          <div class="col-md-6 mb-3">
+            <label for="ref_position" class="form-label">Position/Title</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-user-tie"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="ref_position" 
+                     name="ref_position" 
+                     placeholder="Manager, Director, etc."/>
+            </div>
+          </div>
+          
+          <!-- Relationship -->
+          <div class="col-md-6 mb-3">
+            <label for="ref_relationship" class="form-label">Relationship</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-handshake"></i></span>
+              <select class="form-control" id="ref_relationship" name="ref_relationship">
+                <option value="">Select relationship...</option>
+                <option value="supervisor">Former Supervisor</option>
+                <option value="colleague">Former Colleague</option>
+                <option value="client">Former Client</option>
+                <option value="teacher">Teacher/Professor</option>
+                <option value="mentor">Mentor</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-4">
-        <label class="form-label">Phone</label>
-        <input class="form-control" type="text" name="ref_phone"
-               t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].phone) or ''"/>
+      
+      <!-- Add more reference button -->
+      <div class="text-center mb-4">
+        <button type="button" class="btn btn-outline-primary" id="add_reference_btn">
+          <i class="fa fa-plus me-2"></i>Add Another Reference
+        </button>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Previous
+          </button>
+          <button type="submit" name="next_step" value="1" class="btn btn-primary btn-lg">
+            Save &amp; Continue
+            <i class="fa fa-arrow-right ms-2"></i>
+          </button>
+        </div>
       </div>
     </div>
   </template>

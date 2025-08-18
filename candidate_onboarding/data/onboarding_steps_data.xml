@@ -2,67 +2,115 @@
     <!-- Default Onboarding Template -->
     <record id="default_template" model="onboarding.template">
         <field name="name">Standard Candidate Onboarding</field>
-        <field name="step_ids" eval="[
-            (0, 0, {
-                'name': 'Personal Information',
-                'sequence': 1,
-                'view_id': ref('candidate_onboarding.personal_info_step'),
-                'required': True
-            }),
-            (0, 0, {
-                'name': 'Contact Details',
-                'sequence': 2,
-                'view_id': ref('candidate_onboarding.additional_info_step'),
-                'required': True
-            }),
-            (0, 0, {
-                'name': 'Highest Qualification',
-                'sequence': 3,
-                'view_id': ref('candidate_onboarding.highest_qualification_step'),
-                'required': True
-            }),
-            (0, 0, {
-                'name': 'Other Qualifications',
-                'sequence': 4,
-                'view_id': ref('candidate_onboarding.other_qualifications_step'),
-                'required': False
-            }),
-            (0, 0, {
-                'name': 'Work Experience',
-                'sequence': 5,
-                'view_id': ref('candidate_onboarding.work_experience_step'),
-                'required': False
-            }),
-            (0, 0, {
-                'name': 'Skills Assessment',
-                'sequence': 6,
-                'view_id': ref('candidate_onboarding.skills_step'),
-                'required': False
-            }),
-            (0, 0, {
-                'name': 'Availability',
-                'sequence': 7,
-                'view_id': ref('candidate_onboarding.availability_step'),
-                'required': True
-            }),
-            (0, 0, {
-                'name': 'References',
-                'sequence': 8,
-                'view_id': ref('candidate_onboarding.references_step'),
-                'required': False
-            }),
-            (0, 0, {
-                'name': 'Document Upload',
-                'sequence': 9,
-                'view_id': ref('candidate_onboarding.documents_step'),
-                'required': True
-            }),
-            (0, 0, {
-                'name': 'Final Review',
-                'sequence': 10,
-                'view_id': ref('candidate_onboarding.review_step'),
-                'required': True
-            })
-        ]"/>
+        <field name="description">Complete candidate onboarding process with 9 structured steps</field>
+    </record>
+
+    <!-- Create Steps -->
+    <record id="step_personal_info" model="onboarding.step">
+        <field name="name">Personal Information</field>
+        <field name="sequence">10</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="step_additional_info" model="onboarding.step">
+        <field name="name">Additional Information</field>
+        <field name="sequence">20</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="step_highest_qualification" model="onboarding.step">
+        <field name="name">Highest Qualification</field>
+        <field name="sequence">30</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="step_other_qualifications" model="onboarding.step">
+        <field name="name">Other Qualifications</field>
+        <field name="sequence">40</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">False</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="step_work_experience" model="onboarding.step">
+        <field name="name">Work Experience</field>
+        <field name="sequence">50</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">False</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="step_skills" model="onboarding.step">
+        <field name="name">Skills</field>
+        <field name="sequence">60</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">False</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="step_availability" model="onboarding.step">
+        <field name="name">Availability</field>
+        <field name="sequence">70</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="step_references" model="onboarding.step">
+        <field name="name">References</field>
+        <field name="sequence">80</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">False</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="step_documents" model="onboarding.step">
+        <field name="name">Documents</field>
+        <field name="sequence">90</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
+    <!-- Default Fields -->
+    <record id="field_education" model="onboarding.field">
+        <field name="name">Education &amp; Training</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="field_it" model="onboarding.field">
+        <field name="name">Information Technology</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="field_engineering" model="onboarding.field">
+        <field name="name">Engineering</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="field_healthcare" model="onboarding.field">
+        <field name="name">Healthcare</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="field_business" model="onboarding.field">
+        <field name="name">Business &amp; Management</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="field_agriculture" model="onboarding.field">
+        <field name="name">Agriculture</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="field_other" model="onboarding.field">
+        <field name="name">Other</field>
+        <field name="active">True</field>
     </record>
 </odoo>

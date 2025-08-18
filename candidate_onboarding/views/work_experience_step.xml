@@ -1,25 +1,89 @@
 <odoo>
-  <template id="work_experience_step">
-    <div class="row">
-      <div class="col-md-6">
-        <label class="form-label">Company/Organization</label>
-        <input class="form-control" type="text" name="exp_company"
-               t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].company) or ''"/>
+  <template id="work_experience_step" name="Work Experience Step">
+    <div class="step-content" data-step="work_experience">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">Work Experience</h4>
+          <p class="text-muted mb-4">Please provide details about your work experience. This step is optional.</p>
+        </div>
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Position</label>
-        <input class="form-control" type="text" name="exp_position"
-               t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].position) or ''"/>
+      
+      <div class="work-experience-entry border rounded p-3 mb-3">
+        <div class="row">
+          <!-- Company -->
+          <div class="col-md-6 mb-3">
+            <label for="exp_company" class="form-label">Company/Organization</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-building"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="exp_company" 
+                     name="exp_company" 
+                     placeholder="Company Name"
+                     t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].company) or ''"/>
+            </div>
+          </div>
+          
+          <!-- Position -->
+          <div class="col-md-6 mb-3">
+            <label for="exp_position" class="form-label">Position</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-user-tie"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="exp_position" 
+                     name="exp_position" 
+                     placeholder="Job Title"
+                     t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].position) or ''"/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <!-- Start Date -->
+          <div class="col-md-6 mb-3">
+            <label for="exp_start_date" class="form-label">Start Date</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+              <input type="date" 
+                     class="form-control" 
+                     id="exp_start_date" 
+                     name="exp_start_date"
+                     t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].start_date) or ''"/>
+            </div>
+          </div>
+          
+          <!-- End Date -->
+          <div class="col-md-6 mb-3">
+            <label for="exp_end_date" class="form-label">End Date</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+              <input type="date" 
+                     class="form-control" 
+                     id="exp_end_date" 
+                     name="exp_end_date"
+                     t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].end_date) or ''"/>
+            </div>
+            <div class="form-check mt-2">
+              <input class="form-check-input" type="checkbox" id="currently_working" name="currently_working">
+              <label class="form-check-label" for="currently_working">
+                Currently working here
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6 mt-3">
-        <label class="form-label">Start Date</label>
-        <input class="form-control" type="date" name="exp_start_date"
-               t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].start_date) or ''"/>
-      </div>
-      <div class="col-md-6 mt-3">
-        <label class="form-label">End Date</label>
-        <input class="form-control" type="date" name="exp_end_date"
-               t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].end_date) or ''"/>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Previous
+          </button>
+          <button type="submit" name="next_step" value="1" class="btn btn-primary btn-lg">
+            Save &amp; Continue
+            <i class="fa fa-arrow-right ms-2"></i>
+          </button>
+        </div>
       </div>
     </div>
   </template>

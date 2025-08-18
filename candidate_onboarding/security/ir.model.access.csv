@@ -1,8 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_onboarding_template,access_onboarding_template,model_onboarding_template,,1,1,1,1
 access_onboarding_step,access_onboarding_step,model_onboarding_step,,1,1,1,1
+access_onboarding_field,access_onboarding_field,model_onboarding_field,,1,1,1,1
 access_candidate_onboarding,access_candidate_onboarding,model_candidate_onboarding,,1,1,1,1
 access_onboarding_qualification,access_onboarding_qualification,model_onboarding_qualification,,1,1,1,1
 access_onboarding_work_experience,access_onboarding_work_experience,model_onboarding_work_experience,,1,1,1,1
 access_onboarding_skill,access_onboarding_skill,model_onboarding_skill,,1,1,1,1
+access_onboarding_skill_assignment,access_onboarding_skill_assignment,model_onboarding_skill_assignment,,1,1,1,1
 access_onboarding_reference,access_onboarding_reference,model_onboarding_reference,,1,1,1,1

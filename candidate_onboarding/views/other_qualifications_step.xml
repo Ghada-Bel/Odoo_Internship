@@ -1,28 +1,174 @@
 <odoo>
-  <template id="other_qualifications_step">
-    <div class="row">
-      <div class="col-md-6">
-        <label class="form-label">Qualification</label>
-        <select class="form-select" name="oq_qualification">
-          <option value="">--</option>
-          <option value="phd">PhD</option>
-          <option value="master">Master's Degree</option>
-          <option value="bachelor">Bachelor's Degree</option>
-          <option value="diploma">Diploma</option>
-          <option value="certificate">Certificate</option>
-        </select>
+  <template id="other_qualifications_step" name="Other Qualifications Step">
+    <div class="step-content" data-step="other_qualifications">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">Other Qualifications</h4>
+          <p class="text-muted mb-4">Please provide details about your other educational qualifications. At least one qualification is required, and all fields are mandatory for each qualification added. <span class="text-danger">*</span> indicates required fields.</p>
+        </div>
       </div>
-      <div class="col-md-6">
-        <label class="form-label">Field of Study</label>
-        <input class="form-control" type="text" name="oq_field"/>
+      
+      <!-- First Qualification -->
+      <div class="qualification-entry border rounded p-3 mb-3">
+        <div class="row">
+          <!-- Qualification Type -->
+          <div class="col-md-6 mb-3">
+            <label for="oq_qualification_1" class="form-label">Qualification <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-graduation-cap"></i></span>
+              <select class="form-control" id="oq_qualification_1" name="oq_qualification" required="true">
+                <option value="">Master's</option>
+                <option value="phd">PhD</option>
+                <option value="masters">Master's Degree</option>
+                <option value="bachelor">Bachelor's Degree</option>
+                <option value="diploma">Diploma</option>
+                <option value="certificate">Certificate</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Field of Study -->
+          <div class="col-md-6 mb-3">
+            <label for="oq_field_1" class="form-label">In (Field/Subject) <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-book"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="oq_field_1" 
+                     name="oq_field" 
+                     placeholder="Agricultural Economics"
+                     required="true"/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <!-- Institution -->
+          <div class="col-md-6 mb-3">
+            <label for="oq_institution_1" class="form-label">School/Institution <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-university"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="oq_institution_1" 
+                     name="oq_institution" 
+                     placeholder="Africa University"
+                     required="true"/>
+            </div>
+          </div>
+          
+          <!-- Year -->
+          <div class="col-md-6 mb-3">
+            <label for="oq_year_1" class="form-label">Year of Completion <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+              <input type="number" 
+                     class="form-control" 
+                     id="oq_year_1" 
+                     name="oq_year" 
+                     placeholder="2018"
+                     min="1950" 
+                     max="2030"
+                     required="true"/>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Delete button (for dynamic entries) -->
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-danger btn-sm">
+            <i class="fa fa-trash"></i> Remove
+          </button>
+        </div>
       </div>
-      <div class="col-md-6 mt-3">
-        <label class="form-label">Institution</label>
-        <input class="form-control" type="text" name="oq_institution"/>
+      
+      <!-- Second Qualification -->
+      <div class="qualification-entry border rounded p-3 mb-3">
+        <div class="row">
+          <!-- Qualification Type -->
+          <div class="col-md-6 mb-3">
+            <label for="oq_qualification_2" class="form-label">Qualification <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-graduation-cap"></i></span>
+              <select class="form-control" id="oq_qualification_2" name="oq_qualification_2">
+                <option value="">Bachelor</option>
+                <option value="phd">PhD</option>
+                <option value="masters">Master's Degree</option>
+                <option value="bachelor">Bachelor's Degree</option>
+                <option value="diploma">Diploma</option>
+                <option value="certificate">Certificate</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Field of Study -->
+          <div class="col-md-6 mb-3">
+            <label for="oq_field_2" class="form-label">In (Field/Subject) <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-book"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="oq_field_2" 
+                     name="oq_field_2" 
+                     placeholder="Agricultural Economics"/>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <!-- Institution -->
+          <div class="col-md-6 mb-3">
+            <label for="oq_institution_2" class="form-label">School/Institution <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-university"></i></span>
+              <input type="text" 
+                     class="form-control" 
+                     id="oq_institution_2" 
+                     name="oq_institution_2" 
+                     placeholder="Africa University"/>
+            </div>
+          </div>
+          
+          <!-- Year -->
+          <div class="col-md-6 mb-3">
+            <label for="oq_year_2" class="form-label">Year of Completion <span class="text-danger">*</span></label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+              <input type="number" 
+                     class="form-control" 
+                     id="oq_year_2" 
+                     name="oq_year_2" 
+                     min="1950" 
+                     max="2030"/>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Delete button -->
+        <div class="text-end">
+          <button type="button" class="btn btn-outline-danger btn-sm">
+            <i class="fa fa-trash"></i> Remove
+          </button>
+        </div>
       </div>
-      <div class="col-md-6 mt-3">
-        <label class="form-label">Year</label>
-        <input class="form-control" type="number" name="oq_year" min="1900" max="2100"/>
+      
+      <!-- Add New Qualification Button -->
+      <div class="text-center mb-4">
+        <button type="button" class="btn btn-outline-primary" id="add_qualification_btn">
+          <i class="fa fa-plus me-2"></i>Add New Qualification
+        </button>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Previous
+          </button>
+          <button type="submit" name="next_step" value="1" class="btn btn-primary btn-lg">
+            Save &amp; Continue
+            <i class="fa fa-arrow-right ms-2"></i>
+          </button>
+        </div>
       </div>
     </div>
   </template>

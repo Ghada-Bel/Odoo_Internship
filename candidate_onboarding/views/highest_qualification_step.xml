@@ -1,31 +1,88 @@
 <odoo>
-  <template id="highest_qualification_step">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label">Highest Qualification</label>
-          <select class="form-select" name="qualification">
-            <option value="" t-att-selected="not onboarding.qualification">--</option>
-            <option value="phd" t-att-selected="onboarding.qualification == 'phd'">PhD</option>
-            <option value="master" t-att-selected="onboarding.qualification == 'master'">Master's Degree</option>
-            <option value="bachelor" t-att-selected="onboarding.qualification == 'bachelor'">Bachelor's Degree</option>
-            <option value="diploma" t-att-selected="onboarding.qualification == 'diploma'">Diploma</option>
-            <option value="certificate" t-att-selected="onboarding.qualification == 'certificate'">Certificate</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Field of Study</label>
-          <input class="form-control" type="text" name="field_of_study" t-att-value="onboarding.field_of_study or ''"/>
+  <template id="highest_qualification_step" name="Highest Qualification Step">
+    <div class="step-content" data-step="highest_qualification">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">Highest Qualification</h4>
+          <p class="text-muted mb-4">Please provide details about your highest educational qualification. <span class="text-danger">*</span> indicates required fields.</p>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label">Institution</label>
-          <input class="form-control" type="text" name="institution" t-att-value="onboarding.institution or ''"/>
+      
+      <div class="row">
+        <!-- Qualification Level -->
+        <div class="col-md-6 mb-3">
+          <label for="qualification_level" class="form-label">Qualification <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-graduation-cap"></i></span>
+            <select class="form-control" id="qualification_level" name="qualification_level" required="true">
+              <option value="">Master's</option>
+              <option value="matric" t-att-selected="'selected' if onboarding.qualification_level == 'matric' else None">Matric/High School</option>
+              <option value="diploma" t-att-selected="'selected' if onboarding.qualification_level == 'diploma' else None">Diploma</option>
+              <option value="degree" t-att-selected="'selected' if onboarding.qualification_level == 'degree' else None">Bachelor's Degree</option>
+              <option value="masters" t-att-selected="'selected' if onboarding.qualification_level == 'masters' else None">Master's Degree</option>
+              <option value="phd" t-att-selected="'selected' if onboarding.qualification_level == 'phd' else None">PhD</option>
+            </select>
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Year of Graduation</label>
-          <input class="form-control" type="number" name="graduation_year" t-att-value="onboarding.graduation_year or ''" min="1900" max="2100"/>
+        
+        <!-- Field/Subject -->
+        <div class="col-md-6 mb-3">
+          <label for="qualification_field" class="form-label">In (Field/Subject) <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-book"></i></span>
+            <input type="text" 
+                   class="form-control" 
+                   id="qualification_field" 
+                   name="qualification_field" 
+                   placeholder="Graphic Design"
+                   t-att-value="onboarding.qualification_field or ''" 
+                   required="true"/>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Institution -->
+        <div class="col-md-6 mb-3">
+          <label for="institution" class="form-label">School/Institution <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-university"></i></span>
+            <input type="text" 
+                   class="form-control" 
+                   id="institution" 
+                   name="institution" 
+                   placeholder="Africa University"
+                   t-att-value="onboarding.institution or ''" 
+                   required="true"/>
+          </div>
+        </div>
+        
+        <!-- Year Completed -->
+        <div class="col-md-6 mb-3">
+          <label for="qualification_year" class="form-label">Year Completed</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+            <input type="number" 
+                   class="form-control" 
+                   id="qualification_year" 
+                   name="qualification_year" 
+                   placeholder="2020"
+                   min="1950" 
+                   max="2030"
+                   t-att-value="onboarding.qualification_year or ''"/>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Previous
+          </button>
+          <button type="submit" name="next_step" value="1" class="btn btn-primary btn-lg">
+            Save &amp; Continue
+            <i class="fa fa-arrow-right ms-2"></i>
+          </button>
         </div>
       </div>
     </div>

@@ -1,14 +1,102 @@
 <odoo>
-  <template id="availability_step">
-    <div class="mb-3">
-      <label class="form-label">Availability</label>
-      <select class="form-select" name="availability">
-        <option value="" t-att-selected="not onboarding.availability">--</option>
-        <option value="immediate" t-att-selected="onboarding.availability == 'immediate'">Immediately</option>
-        <option value="1_month" t-att-selected="onboarding.availability == '1_month'">Within 1 Month</option>
-        <option value="3_months" t-att-selected="onboarding.availability == '3_months'">Within 3 Months</option>
-        <option value="negotiable" t-att-selected="onboarding.availability == 'negotiable'">Negotiable</option>
-      </select>
+  <template id="availability_step" name="Availability Step">
+    <div class="step-content" data-step="availability">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">Availability</h4>
+          <p class="text-muted mb-4">Please provide your availability information. <span class="text-danger">*</span> indicates required fields.</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Start Date -->
+        <div class="col-md-6 mb-3">
+          <label for="start_date" class="form-label">Available Start Date</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+            <input type="date" 
+                   class="form-control" 
+                   id="start_date" 
+                   name="start_date"
+                   t-att-value="onboarding.start_date or ''"/>
+          </div>
+        </div>
+        
+        <!-- Notice Period -->
+        <div class="col-md-6 mb-3">
+          <label for="notice_period" class="form-label">Notice Period (days)</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-clock"></i></span>
+            <input type="number" 
+                   class="form-control" 
+                   id="notice_period" 
+                   name="notice_period" 
+                   placeholder="30"
+                   min="0"
+                   t-att-value="onboarding.notice_period or ''"/>
+          </div>
+          <small class="text-muted">Enter 0 if you can start immediately</small>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Availability Type -->
+        <div class="col-md-6 mb-3">
+          <label for="availability_type" class="form-label">Availability Type</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+            <select class="form-control" id="availability_type" name="availability_type">
+              <option value="">Select availability...</option>
+              <option value="full_time">Full Time</option>
+              <option value="part_time">Part Time</option>
+              <option value="contract">Contract</option>
+              <option value="freelance">Freelance</option>
+              <option value="remote">Remote</option>
+              <option value="hybrid">Hybrid</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Preferred Work Schedule -->
+        <div class="col-md-6 mb-3">
+          <label for="work_schedule" class="form-label">Preferred Work Schedule</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-clock"></i></span>
+            <select class="form-control" id="work_schedule" name="work_schedule">
+              <option value="">Select schedule...</option>
+              <option value="day_shift">Day Shift (8AM - 5PM)</option>
+              <option value="night_shift">Night Shift (6PM - 6AM)</option>
+              <option value="flexible">Flexible Hours</option>
+              <option value="weekends">Weekends Available</option>
+              <option value="shift_work">Shift Work</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Additional Notes -->
+      <div class="row">
+        <div class="col-12 mb-3">
+          <label for="availability_notes" class="form-label">Additional Notes</label>
+          <textarea class="form-control" 
+                    id="availability_notes" 
+                    name="availability_notes" 
+                    placeholder="Any additional information about your availability, constraints, or preferences..."
+                    rows="3"></textarea>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Previous
+          </button>
+          <button type="submit" name="next_step" value="1" class="btn btn-primary btn-lg">
+            Save &amp; Continue
+            <i class="fa fa-arrow-right ms-2"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </template>
 </odoo>

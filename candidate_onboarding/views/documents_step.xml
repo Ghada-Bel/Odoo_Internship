@@ -1,14 +1,173 @@
 <odoo>
-  <template id="documents_step">
-    <div class="row">
-      <div class="col-md-6">
-        <label class="form-label">Cover Letter (PDF)</label>
-        <input class="form-control" type="file" name="cover_letter" accept="application/pdf"/>
+  <template id="documents_step" name="Documents Upload Step">
+    <div class="step-content" data-step="documents">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">Document Upload</h4>
+          <p class="text-muted mb-4">Please upload the required documents. All files must be in PDF format and under 5MB. <span class="text-danger">*</span> indicates required fields.</p>
+        </div>
       </div>
-      <div class="col-md-6">
-        <label class="form-label">CV (PDF)</label>
-        <input class="form-control" type="file" name="cv" accept="application/pdf"/>
+      
+      <div class="row">
+        <!-- CV/Resume -->
+        <div class="col-md-6 mb-4">
+          <div class="card border-primary">
+            <div class="card-body">
+              <h6 class="card-title">
+                <i class="fa fa-file-pdf text-danger me-2"></i>
+                CV/Resume <span class="text-danger">*</span>
+              </h6>
+              <p class="card-text text-muted small">Upload your educational certificates and qualifications</p>
+              <input class="form-control" 
+                     type="file" 
+                     id="certificates" 
+                     name="certificates" 
+                     accept="application/pdf"/>
+              <div class="form-text">
+                <small class="text-muted">
+                  <i class="fa fa-info-circle me-1"></i>
+                  Maximum file size: 5MB | Format: PDF only
+                </small>
+              </div>
+              <t t-if="onboarding.certificates_filename">
+                <div class="mt-2">
+                  <small class="text-success">
+                    <i class="fa fa-check-circle me-1"></i>
+                    Current file: <t t-esc="onboarding.certificates_filename"/>
+                  </small>
+                </div>
+              </t>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Upload Guidelines -->
+      <div class="row">
+        <div class="col-12">
+          <div class="alert alert-info">
+            <h6><i class="fa fa-lightbulb me-2"></i>Upload Guidelines:</h6>
+            <ul class="mb-0">
+              <li>All documents must be in PDF format</li>
+              <li>Maximum file size is 5MB per document</li>
+              <li>Ensure documents are clear and readable</li>
+              <li>CV/Resume is required, other documents are optional but recommended</li>
+              <li>You can update documents later if needed</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Previous
+          </button>
+          <button type="submit" name="next_step" value="1" class="btn btn-success btn-lg">
+            Complete Application
+            <i class="fa fa-check ms-2"></i>
+          </button>
+        </div>
       </div>
     </div>
   </template>
-</odoo>
+</odoo>d your current CV or resume in PDF format</p>
+              <input class="form-control" 
+                     type="file" 
+                     id="cv" 
+                     name="cv" 
+                     accept="application/pdf"
+                     required="true"/>
+              <div class="form-text">
+                <small class="text-muted">
+                  <i class="fa fa-info-circle me-1"></i>
+                  Maximum file size: 5MB | Format: PDF only
+                </small>
+              </div>
+              <t t-if="onboarding.cv_filename">
+                <div class="mt-2">
+                  <small class="text-success">
+                    <i class="fa fa-check-circle me-1"></i>
+                    Current file: <t t-esc="onboarding.cv_filename"/>
+                  </small>
+                </div>
+              </t>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Cover Letter -->
+        <div class="col-md-6 mb-4">
+          <div class="card border-info">
+            <div class="card-body">
+              <h6 class="card-title">
+                <i class="fa fa-file-pdf text-danger me-2"></i>
+                Cover Letter
+              </h6>
+              <p class="card-text text-muted small">Upload your cover letter in PDF format (optional)</p>
+              <input class="form-control" 
+                     type="file" 
+                     id="cover_letter" 
+                     name="cover_letter" 
+                     accept="application/pdf"/>
+              <div class="form-text">
+                <small class="text-muted">
+                  <i class="fa fa-info-circle me-1"></i>
+                  Maximum file size: 5MB | Format: PDF only
+                </small>
+              </div>
+              <t t-if="onboarding.cover_letter_filename">
+                <div class="mt-2">
+                  <small class="text-success">
+                    <i class="fa fa-check-circle me-1"></i>
+                    Current file: <t t-esc="onboarding.cover_letter_filename"/>
+                  </small>
+                </div>
+              </t>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- ID Document -->
+        <div class="col-md-6 mb-4">
+          <div class="card border-warning">
+            <div class="card-body">
+              <h6 class="card-title">
+                <i class="fa fa-file-pdf text-danger me-2"></i>
+                ID Document
+              </h6>
+              <p class="card-text text-muted small">Upload a copy of your identification document</p>
+              <input class="form-control" 
+                     type="file" 
+                     id="id_document" 
+                     name="id_document" 
+                     accept="application/pdf"/>
+              <div class="form-text">
+                <small class="text-muted">
+                  <i class="fa fa-info-circle me-1"></i>
+                  Maximum file size: 5MB | Format: PDF only
+                </small>
+              </div>
+              <t t-if="onboarding.id_document_filename">
+                <div class="mt-2">
+                  <small class="text-success">
+                    <i class="fa fa-check-circle me-1"></i>
+                    Current file: <t t-esc="onboarding.id_document_filename"/>
+                  </small>
+                </div>
+              </t>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Certificates -->
+        <div class="col-md-6 mb-4">
+          <div class="card border-success">
+            <div class="card-body">
+              <h6 class="card-title">
+                <i class="fa fa-file-pdf text-danger me-2"></i>
+                Certificates
+              </h6>
+              <p class="card-text text-muted small">Uploa

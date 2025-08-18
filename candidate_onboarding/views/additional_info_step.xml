@@ -1,60 +1,153 @@
 <odoo>
-  <template id="additional_info_step">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label">Country</label>
-          <select class="form-select" name="country_id">
-            <option value="">--</option>
-            <t t-foreach="request.env['res.country'].sudo().search([])" t-as="c">
-              <option t-att-value="c.id" t-att-selected="onboarding.country_id and (onboarding.country_id.id == c.id)">
-                <t t-esc="c.name"/>
-              </option>
-            </t>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Phone</label>
-          <input class="form-control" type="text" name="phone" t-att-value="onboarding.phone or ''"/>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Address</label>
-          <textarea class="form-control" name="physical_address" rows="2"><t t-esc="onboarding.physical_address or ''"/></textarea>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Citizenship</label>
-          <input class="form-control" type="text" name="citizenship" t-att-value="onboarding.citizenship or ''"/>
+  <template id="additional_info_step" name="Additional Information Step">
+    <div class="step-content" data-step="additional_info">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">Additional Information</h4>
+          <p class="text-muted mb-4">Please provide additional details to complete your profile. <span class="text-danger">*</span> indicates required fields.</p>
         </div>
       </div>
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label">Birthplace</label>
-          <input class="form-control" type="text" name="birthplace" t-att-value="onboarding.birthplace or ''"/>
+      
+      <div class="row">
+        <!-- Country -->
+        <div class="col-md-6 mb-3">
+          <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-globe"></i></span>
+            <select class="form-control" id="country" name="country" required="true">
+              <option value="">Zimbabwe</option>
+              <t t-foreach="countries" t-as="country">
+                <option t-att-value="country.id" t-att-selected="'selected' if onboarding.country and onboarding.country.id == country.id else None">
+                  <t t-esc="country.name"/>
+                </option>
+              </t>
+            </select>
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Field of Education/Training</label>
-          <select class="form-select" name="education_field">
-            <option value="" t-att-selected="not onboarding.education_field">--</option>
-            <option value="computer_science" t-att-selected="onboarding.education_field == 'computer_science'">Computer Science</option>
-            <option value="engineering" t-att-selected="onboarding.education_field == 'engineering'">Engineering</option>
-            <option value="business" t-att-selected="onboarding.education_field == 'business'">Business</option>
-            <option value="healthcare" t-att-selected="onboarding.education_field == 'healthcare'">Healthcare</option>
-            <option value="other" t-att-selected="onboarding.education_field == 'other'">Other</option>
-          </select>
+        
+        <!-- Telephone -->
+        <div class="col-md-6 mb-3">
+          <label for="phone" class="form-label">Telephone <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-phone"></i></span>
+            <input type="tel" 
+                   class="form-control" 
+                   id="phone" 
+                   name="phone" 
+                   placeholder="+263 896685528"
+                   t-att-value="onboarding.phone or ''" 
+                   required="true"/>
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Occupation</label>
-          <select class="form-select" name="occupation">
-            <option value="" t-att-selected="not onboarding.occupation">--</option>
-            <option value="developer" t-att-selected="onboarding.occupation == 'developer'">Developer</option>
-            <option value="manager" t-att-selected="onboarding.occupation == 'manager'">Manager</option>
-            <option value="analyst" t-att-selected="onboarding.occupation == 'analyst'">Analyst</option>
-            <option value="other" t-att-selected="onboarding.occupation == 'other'">Other</option>
-          </select>
+      </div>
+      
+      <div class="row">
+        <!-- Physical Address -->
+        <div class="col-md-6 mb-3">
+          <label for="physical_address" class="form-label">Physical Address <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-map-marker"></i></span>
+            <textarea class="form-control" 
+                      id="physical_address" 
+                      name="physical_address" 
+                      placeholder="5857850 hataro tower"
+                      rows="3" 
+                      required="true"><t t-esc="onboarding.physical_address or ''"/></textarea>
+          </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Next of Kin</label>
-          <input class="form-control" type="text" name="next_of_kin" t-att-value="onboarding.next_of_kin or ''"/>
+        
+        <!-- Citizenship -->
+        <div class="col-md-6 mb-3">
+          <label for="citizenship" class="form-label">Citizenship <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+            <input type="text" 
+                   class="form-control" 
+                   id="citizenship" 
+                   name="citizenship" 
+                   placeholder="Zimbabwean"
+                   t-att-value="onboarding.citizenship or ''" 
+                   required="true"/>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Birthplace -->
+        <div class="col-md-6 mb-3">
+          <label for="birthplace" class="form-label">Birthplace <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-map"></i></span>
+            <input type="text" 
+                   class="form-control" 
+                   id="birthplace" 
+                   name="birthplace" 
+                   placeholder="Makoni"
+                   t-att-value="onboarding.birthplace or ''" 
+                   required="true"/>
+          </div>
+        </div>
+        
+        <!-- Field -->
+        <div class="col-md-6 mb-3">
+          <label for="field_id" class="form-label">Field <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-briefcase"></i></span>
+            <select class="form-control" id="field_id" name="field_id" required="true">
+              <option value="">Education &amp; Training</option>
+              <t t-foreach="fields" t-as="field">
+                <option t-att-value="field.id" t-att-selected="'selected' if onboarding.field_id and onboarding.field_id.id == field.id else None">
+                  <t t-esc="field.name"/>
+                </option>
+              </t>
+            </select>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <!-- Occupation -->
+        <div class="col-md-6 mb-3">
+          <label for="occupation" class="form-label">Occupation <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-user-tie"></i></span>
+            <select class="form-control" id="occupation" name="occupation" required="true">
+              <option value="">Primary School teacher</option>
+              <option value="teacher" t-att-selected="'selected' if onboarding.occupation == 'teacher' else None">Teacher</option>
+              <option value="developer" t-att-selected="'selected' if onboarding.occupation == 'developer' else None">Software Developer</option>
+              <option value="manager" t-att-selected="'selected' if onboarding.occupation == 'manager' else None">Manager</option>
+              <option value="analyst" t-att-selected="'selected' if onboarding.occupation == 'analyst' else None">Analyst</option>
+              <option value="consultant" t-att-selected="'selected' if onboarding.occupation == 'consultant' else None">Consultant</option>
+              <option value="other" t-att-selected="'selected' if onboarding.occupation == 'other' else None">Other</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Next of Kin -->
+        <div class="col-md-6 mb-3">
+          <label for="next_of_kin" class="form-label">Next of Kin <span class="text-danger">*</span></label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fa fa-users"></i></span>
+            <input type="text" 
+                   class="form-control" 
+                   id="next_of_kin" 
+                   name="next_of_kin" 
+                   placeholder="Phillips"
+                   t-att-value="onboarding.next_of_kin or ''" 
+                   required="true"/>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Previous
+          </button>
+          <button type="submit" name="next_step" value="1" class="btn btn-primary btn-lg">
+            Save &amp; Continue
+            <i class="fa fa-arrow-right ms-2"></i>
+          </button>
         </div>
       </div>
     </div>

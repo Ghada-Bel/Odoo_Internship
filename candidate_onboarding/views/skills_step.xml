@@ -1,54 +1,144 @@
 <odoo>
-  <template id="skills_step">
-    <!-- Each select is a multi-select; controller will map to M2M -->
-    <div class="mb-4">
-      <h4>Technical Skills</h4>
-      <select class="form-select" name="technical_skill_ids" multiple="multiple">
-        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','technical')])" t-as="s">
-          <option t-att-value="s.id" t-att-selected="s in onboarding.technical_skill_ids"><t t-esc="s.name"/></option>
-        </t>
-      </select>
-      <input class="form-control mt-2" type="text" name="other_technical_skill" placeholder="Other technical skills" t-att-value="onboarding.other_technical_skill or ''"/>
-    </div>
+  <template id="skills_step" name="Skills Assessment Step">
+    <div class="step-content" data-step="skills">
+      <div class="row">
+        <div class="col-12">
+          <h4 class="mb-4">Skills Assessment</h4>
+          <p class="text-muted mb-4">Please select your skills from the categories below. This step is optional but recommended.</p>
+        </div>
+      </div>
+      
+      <!-- Technical Skills -->
+      <div class="mb-4">
+        <h5 class="mb-3"><i class="fa fa-code me-2"></i>Technical Skills</h5>
+        <div class="row">
+          <div class="col-md-8">
+            <select class="form-control" name="technical_skill_ids" multiple="multiple" size="4">
+              <t t-set="technical_skills" t-value="request.env['onboarding.skill'].sudo().search([('skill_type','=','technical')])"/>
+              <t t-foreach="technical_skills" t-as="skill">
+                <option t-att-value="skill.id">
+                  <t t-esc="skill.name"/>
+                </option>
+              </t>
+            </select>
+            <small class="text-muted">Hold Ctrl (Cmd on Mac) to select multiple skills</small>
+          </div>
+          <div class="col-md-4">
+            <input class="form-control" 
+                   type="text" 
+                   name="other_technical_skill" 
+                   placeholder="Other technical skills (separate with commas)"/>
+          </div>
+        </div>
+      </div>
 
-    <div class="mb-4">
-      <h4>Interpersonal Skills</h4>
-      <select class="form-select" name="interpersonal_skill_ids" multiple="multiple">
-        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','interpersonal')])" t-as="s">
-          <option t-att-value="s.id" t-att-selected="s in onboarding.interpersonal_skill_ids"><t t-esc="s.name"/></option>
-        </t>
-      </select>
-      <input class="form-control mt-2" type="text" name="other_interpersonal_skill" placeholder="Other interpersonal skills" t-att-value="onboarding.other_interpersonal_skill or ''"/>
-    </div>
+      <!-- Interpersonal Skills -->
+      <div class="mb-4">
+        <h5 class="mb-3"><i class="fa fa-users me-2"></i>Interpersonal Skills</h5>
+        <div class="row">
+          <div class="col-md-8">
+            <select class="form-control" name="interpersonal_skill_ids" multiple="multiple" size="4">
+              <t t-set="interpersonal_skills" t-value="request.env['onboarding.skill'].sudo().search([('skill_type','=','interpersonal')])"/>
+              <t t-foreach="interpersonal_skills" t-as="skill">
+                <option t-att-value="skill.id">
+                  <t t-esc="skill.name"/>
+                </option>
+              </t>
+            </select>
+            <small class="text-muted">Hold Ctrl (Cmd on Mac) to select multiple skills</small>
+          </div>
+          <div class="col-md-4">
+            <input class="form-control" 
+                   type="text" 
+                   name="other_interpersonal_skill" 
+                   placeholder="Other interpersonal skills"/>
+          </div>
+        </div>
+      </div>
 
-    <div class="mb-4">
-      <h4>Management Skills</h4>
-      <select class="form-select" name="management_skill_ids" multiple="multiple">
-        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','management')])" t-as="s">
-          <option t-att-value="s.id" t-att-selected="s in onboarding.management_skill_ids"><t t-esc="s.name"/></option>
-        </t>
-      </select>
-      <input class="form-control mt-2" type="text" name="other_management_skill" placeholder="Other management skills" t-att-value="onboarding.other_management_skill or ''"/>
-    </div>
+      <!-- Management Skills -->
+      <div class="mb-4">
+        <h5 class="mb-3"><i class="fa fa-cog me-2"></i>Management Skills</h5>
+        <div class="row">
+          <div class="col-md-8">
+            <select class="form-control" name="management_skill_ids" multiple="multiple" size="4">
+              <t t-set="management_skills" t-value="request.env['onboarding.skill'].sudo().search([('skill_type','=','management')])"/>
+              <t t-foreach="management_skills" t-as="skill">
+                <option t-att-value="skill.id">
+                  <t t-esc="skill.name"/>
+                </option>
+              </t>
+            </select>
+            <small class="text-muted">Hold Ctrl (Cmd on Mac) to select multiple skills</small>
+          </div>
+          <div class="col-md-4">
+            <input class="form-control" 
+                   type="text" 
+                   name="other_management_skill" 
+                   placeholder="Other management skills"/>
+          </div>
+        </div>
+      </div>
 
-    <div class="mb-4">
-      <h4>Cognitive Skills</h4>
-      <select class="form-select" name="cognitive_skill_ids" multiple="multiple">
-        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','cognitive')])" t-as="s">
-          <option t-att-value="s.id" t-att-selected="s in onboarding.cognitive_skill_ids"><t t-esc="s.name"/></option>
-        </t>
-      </select>
-      <input class="form-control mt-2" type="text" name="other_cognitive_skill" placeholder="Other cognitive skills" t-att-value="onboarding.other_cognitive_skill or ''"/>
-    </div>
+      <!-- Cognitive Skills -->
+      <div class="mb-4">
+        <h5 class="mb-3"><i class="fa fa-brain me-2"></i>Cognitive Skills</h5>
+        <div class="row">
+          <div class="col-md-8">
+            <select class="form-control" name="cognitive_skill_ids" multiple="multiple" size="4">
+              <t t-set="cognitive_skills" t-value="request.env['onboarding.skill'].sudo().search([('skill_type','=','cognitive')])"/>
+              <t t-foreach="cognitive_skills" t-as="skill">
+                <option t-att-value="skill.id">
+                  <t t-esc="skill.name"/>
+                </option>
+              </t>
+            </select>
+            <small class="text-muted">Hold Ctrl (Cmd on Mac) to select multiple skills</small>
+          </div>
+          <div class="col-md-4">
+            <input class="form-control" 
+                   type="text" 
+                   name="other_cognitive_skill" 
+                   placeholder="Other cognitive skills"/>
+          </div>
+        </div>
+      </div>
 
-    <div class="mb-4">
-      <h4>Personal Attributes</h4>
-      <select class="form-select" name="personal_attribute_ids" multiple="multiple">
-        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','personal')])" t-as="s">
-          <option t-att-value="s.id" t-att-selected="s in onboarding.personal_attribute_ids"><t t-esc="s.name"/></option>
-        </t>
-      </select>
-      <input class="form-control mt-2" type="text" name="other_personal_attribute" placeholder="Other personal attributes" t-att-value="onboarding.other_personal_attribute or ''"/>
+      <!-- Personal Attributes -->
+      <div class="mb-4">
+        <h5 class="mb-3"><i class="fa fa-star me-2"></i>Personal Attributes</h5>
+        <div class="row">
+          <div class="col-md-8">
+            <select class="form-control" name="personal_attribute_ids" multiple="multiple" size="4">
+              <t t-set="personal_skills" t-value="request.env['onboarding.skill'].sudo().search([('skill_type','=','personal')])"/>
+              <t t-foreach="personal_skills" t-as="skill">
+                <option t-att-value="skill.id">
+                  <t t-esc="skill.name"/>
+                </option>
+              </t>
+            </select>
+            <small class="text-muted">Hold Ctrl (Cmd on Mac) to select multiple skills</small>
+          </div>
+          <div class="col-md-4">
+            <input class="form-control" 
+                   type="text" 
+                   name="other_personal_attribute" 
+                   placeholder="Other personal attributes"/>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Previous
+          </button>
+          <button type="submit" name="next_step" value="1" class="btn btn-primary btn-lg">
+            Save &amp; Continue
+            <i class="fa fa-arrow-right ms-2"></i>
+          </button>
+        </div>
+      </div>
     </div>
   </template>
 </odoo>

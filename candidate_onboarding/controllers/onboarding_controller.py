@@ -54,6 +54,26 @@ class OnboardingController(http.Controller):
         completed_count = len(onboarding.completed_step_ids)
         progress = (completed_count / max(total_steps, 1)) * 100
 
+        # Get countries for dropdowns
+        countries = request.env['res.country'].sudo().search([])
+        
+        # Get fields for dropdowns  
+        fields = request.env['onboarding.field'].sudo().search([])
+        if not fields:
+            # Create default fields if none exist
+            default_fields = [
+                'Education & Training',
+                'Information Technology', 
+                'Engineering',
+                'Healthcare',
+                'Business & Management',
+                'Agriculture',
+                'Other'
+            ]
+            for field_name in default_fields:
+                request.env['onboarding.field'].sudo().create({'name': field_name})
+            fields = request.env['onboarding.field'].sudo().search([])
+
         return request.render('candidate_onboarding.onboarding_main', {
             'onboarding': onboarding,
             'current_step': onboarding.current_step_id,
@@ -62,6 +82,8 @@ class OnboardingController(http.Controller):
             'progress': progress,
             'total_steps': total_steps,
             'error': kw.get('error'),
+            'countries': countries,
+            'fields': fields,
         })
 
     def _validate_step_data(self, onboarding, post, files):
@@ -219,6 +241,41 @@ class OnboardingController(http.Controller):
                         else:
                             vals[model_field] = value
 
+            # Handle other qualifications
+            if 'oq_qualification' in post and post['oq_qualification']:
+                qual_vals = {
+                    'qualification': post['oq_qualification'],
+                    'field_of_study': post.get('oq_field', ''),
+                    'institution': post.get('oq_institution', ''),
+                    'year': int(post.get('oq_year', 0)) if post.get('oq_year') else None,
+                }
+                # Clear existing and add new
+                onboarding.other_qualification_ids.unlink()
+                onboarding.other_qualification_ids = [(0, 0, qual_vals)]
+
+            # Handle work experience
+            if 'exp_company' in post and post['exp_company']:
+                exp_vals = {
+                    'company': post['exp_company'],
+                    'position': post.get('exp_position', ''),
+                    'start_date': post.get('exp_start_date') if post.get('exp_start_date') else None,
+                    'end_date': post.get('exp_end_date') if post.get('exp_end_date') else None,
+                }
+                # Clear existing and add new
+                onboarding.work_experience_ids.unlink()
+                onboarding.work_experience_ids = [(0, 0, exp_vals)]
+
+            # Handle references
+            if 'ref_name' in post and post['ref_name']:
+                ref_vals = {
+                    'name': post['ref_name'],
+                    'company': post.get('ref_company', ''),
+                    'phone': post.get('ref_phone', ''),
+                }
+                # Clear existing and add new
+                onboarding.reference_ids.unlink()
+                onboarding.reference_ids = [(0, 0, ref_vals)]
+
             # Handle file uploads
             for file_field in ('cv', 'cover_letter', 'id_document', 'certificates'):
                 file_upload = files.get(file_field)
@@ -239,20 +296,7 @@ class OnboardingController(http.Controller):
 
         except ValidationError as e:
             # Return to form with error message
-            steps = onboarding.template_id.step_ids.sorted('sequence')
-            total_steps = len(steps)
-            completed_count = len(onboarding.completed_step_ids)
-            progress = (completed_count / max(total_steps, 1)) * 100
-            
-            return request.render('candidate_onboarding.onboarding_main', {
-                'onboarding': onboarding,
-                'current_step': onboarding.current_step_id,
-                'completed_steps': onboarding.completed_step_ids,
-                'remaining_steps': steps - onboarding.completed_step_ids,
-                'progress': progress,
-                'total_steps': total_steps,
-                'error': str(e),
-            })
+            return request.redirect('/onboarding?error=' + str(e))
 
         return request.redirect('/onboarding')
 

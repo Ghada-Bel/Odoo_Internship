@@ -63,7 +63,7 @@ class CandidateOnboarding(models.Model):
     work_experience_ids = fields.One2many('onboarding.work.experience', 'onboarding_id', string='Work Experience')
     
     # Skills
-    skill_ids = fields.One2many('onboarding.skill', 'onboarding_id', string='Skills')
+    skill_ids = fields.One2many('onboarding.skill.assignment', 'onboarding_id', string='Skills')
     
     # Availability
     start_date = fields.Date(string='Available Start Date')
@@ -166,7 +166,7 @@ class CandidateOnboarding(models.Model):
         for record in self:
             if record.email:
                 import re
-                if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}, record.email):
+                if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', record.email):
                     raise ValidationError(_('Please enter a valid email address.'))
 
     @api.constrains('phone')
@@ -174,7 +174,7 @@ class CandidateOnboarding(models.Model):
         for record in self:
             if record.phone:
                 import re
-                if not re.match(r'^\+?[\d\s\-\(\)]{8,}, record.phone):
+                if not re.match(r'^\+?[\d\s\-\(\)]{8,}$', record.phone):
                     raise ValidationError(_('Please enter a valid phone number.'))
 
     @api.constrains('dependencies')
@@ -214,3 +214,12 @@ class OnboardingField(models.Model):
     name = fields.Char(string='Field Name', required=True)
     description = fields.Text(string='Description')
     active = fields.Boolean(string='Active', default=True)
+
+
+class OnboardingSkillAssignment(models.Model):
+    _name = 'onboarding.skill.assignment'
+    _description = 'Skill Assignment to Onboarding'
+    
+    onboarding_id = fields.Many2one('candidate.onboarding', required=True, ondelete='cascade')
+    skill_id = fields.Many2one('onboarding.skill', required=True)
+    skill_type = fields.Selection(related='skill_id.skill_type', store=True)
