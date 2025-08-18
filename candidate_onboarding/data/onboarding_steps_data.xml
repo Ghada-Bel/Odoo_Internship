@@ -1,0 +1,72 @@
+<odoo>
+    <!-- Default Onboarding Template -->
+    <record id="default_template" model="onboarding.template">
+        <field name="name">Standard Candidate Onboarding</field>
+        <field name="step_ids" eval="[
+            (0, 0, {
+                'name': 'Personal Information',
+                'sequence': 1,
+                'view_id': ref('candidate_onboarding.personal_info_step'),
+                'required': True
+            }),
+            (0, 0, {
+                'name': 'Additional Information',
+                'sequence': 2,
+                'view_id': ref('candidate_onboarding.additional_info_step'),
+                'required': True
+            }),
+            (0, 0, {
+                'name': 'Highest qualification',
+                'sequence': 3,
+                'view_id': ref('candidate_onboarding.highest_qualification_step'),
+                'required': True
+            }),
+
+	    (0, 0, {
+                'name': 'Other Qualifications',
+                'sequence': 4,
+                'view_id': ref('candidate_onboarding.other_qualifications_step'),
+                'required': False
+            }),
+
+            (0, 0, {
+                'name': 'Work Experience',
+                'sequence': 5,
+                'view_id': ref('candidate_onboarding.work_experience_step'),
+                'required': True
+            }),
+            (0, 0, {
+                'name': 'Skills Assessment',
+                'sequence': 6,
+                'view_id': ref('candidate_onboarding.skills_step'),
+                'required': False
+            }),
+            (0, 0, {
+                'name': 'Availability',
+                'sequence': 7,
+                'view_id': ref('candidate_onboarding.availability_step'),
+                'required': True
+            }),
+            (0, 0, {
+                'name': 'References',
+                'sequence': 8,
+                'view_id': ref('candidate_onboarding.references_step'),
+                'required': False
+            }),
+            (0, 0, {
+                'name': 'Document Upload',
+                'sequence': 9,
+                'view_id': ref('candidate_onboarding.documents_step'),
+                'required': True
+            }),
+            (0, 0, {
+                'name': 'Final Review',
+                'sequence': 10,
+                'view_id': ref('candidate_onboarding.review_step'),
+                'required': True
+            })
+        ]"/>
+    </record>
+
+     
+</odoo>

@@ -1,0 +1,67 @@
+<odoo>
+    <!-- Progress Tracker -->
+    <template id="progress_bar">
+        <div class="progress-tracker mb-3">
+            <t t-foreach="completed_steps" t-as="step">
+                <span class="badge bg-success me-1" t-attf-title="#{step.name} (Completed)">
+                    <i class="fa fa-check"/> <t t-esc="step.sequence"/>
+                </span>
+            </t>
+            <span class="badge bg-primary me-1" t-attf-title="#{current_step.name}">
+                <t t-esc="current_step.sequence"/>
+            </span>
+            <t t-foreach="remaining_steps" t-as="step">
+                <span class="badge bg-secondary me-1" t-attf-title="#{step.name}">
+                    <t t-esc="step.sequence"/>
+                </span>
+            </t>
+            <div class="progress mt-2">
+                <div class="progress-bar"
+                     role="progressbar"
+                     t-attf-style="width: #{int(progress)}%"
+                     t-att-aria-valuenow="int(progress)"
+                     aria-valuemin="0" aria-valuemax="100">
+                    <t t-esc="int(progress)"/>%
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Main Template -->
+    <template id="onboarding_main" name="Dynamic Onboarding">
+        <t t-call="website.layout">
+            <div class="container mt-4">
+                <t t-call="candidate_onboarding.progress_bar"/>
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h3 class="mb-0" t-esc="current_step.name"/>
+                    </div>
+                    <form t-att-action="'/onboarding/save'"
+                          method="post"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="card-body">
+                            <!-- Render the step's QWeb template -->
+                            <t t-call="current_step.view_id.key"/>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <button t-if="current_step.sequence &gt; 1"
+                                    class="btn btn-secondary"
+                                    type="submit"
+                                    name="prev_step"
+                                    value="1">
+                                Previous
+                            </button>
+                            <button class="btn btn-primary ms-auto"
+                                    type="submit"
+                                    name="next_step"
+                                    value="1">
+                                Save &amp; Continue
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

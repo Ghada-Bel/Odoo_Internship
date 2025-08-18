@@ -1,0 +1,14 @@
+<odoo>
+  <template id="documents_step">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="form-label">Cover Letter (PDF)</label>
+        <input class="form-control" type="file" name="cover_letter" accept="application/pdf"/>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">CV (PDF)</label>
+        <input class="form-control" type="file" name="cv" accept="application/pdf"/>
+      </div>
+    </div>
+  </template>
+</odoo>

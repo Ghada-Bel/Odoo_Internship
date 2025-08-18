@@ -1,0 +1,26 @@
+<odoo>
+  <template id="work_experience_step">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="form-label">Company/Organization</label>
+        <input class="form-control" type="text" name="exp_company"
+               t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].company) or ''"/>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Position</label>
+        <input class="form-control" type="text" name="exp_position"
+               t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].position) or ''"/>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label class="form-label">Start Date</label>
+        <input class="form-control" type="date" name="exp_start_date"
+               t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].start_date) or ''"/>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label class="form-label">End Date</label>
+        <input class="form-control" type="date" name="exp_end_date"
+               t-att-value="(onboarding.work_experience_ids and onboarding.work_experience_ids[0].end_date) or ''"/>
+      </div>
+    </div>
+  </template>
+</odoo>

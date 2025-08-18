@@ -1,0 +1,62 @@
+<odoo>
+  <template id="additional_info_step">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">Country</label>
+          <select class="form-select" name="country_id">
+            <option value="">--</option>
+            <t t-foreach="request.env['res.country'].sudo().search([])" t-as="c">
+              <option t-att-value="c.id" t-att-selected="onboarding.country_id and (onboarding.country_id.id == c.id)">
+                <t t-esc="c.name"/>
+              </option>
+            </t>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Phone</label>
+          <input class="form-control" type="text" name="phone" t-att-value="onboarding.phone or ''"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Address</label>
+          <textarea class="form-control" name="physical_address" rows="2"><t t-esc="onboarding.physical_address or ''"/></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Citizenship</label>
+          <input class="form-control" type="text" name="citizenship" t-att-value="onboarding.citizenship or ''"/>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">Birthplace</label>
+          <input class="form-control" type="text" name="birthplace" t-att-value="onboarding.birthplace or ''"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Field of Education/Training</label>
+          <select class="form-select" name="education_field">
+            <option value="" t-att-selected="not onboarding.education_field">--</option>
+            <option value="computer_science" t-att-selected="onboarding.education_field == 'computer_science'">Computer Science</option>
+            <option value="engineering" t-att-selected="onboarding.education_field == 'engineering'">Engineering</option>
+            <option value="business" t-att-selected="onboarding.education_field == 'business'">Business</option>
+            <option value="healthcare" t-att-selected="onboarding.education_field == 'healthcare'">Healthcare</option>
+            <option value="other" t-att-selected="onboarding.education_field == 'other'">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Occupation</label>
+          <select class="form-select" name="occupation">
+            <option value="" t-att-selected="not onboarding.occupation">--</option>
+            <option value="developer" t-att-selected="onboarding.occupation == 'developer'">Developer</option>
+            <option value="manager" t-att-selected="onboarding.occupation == 'manager'">Manager</option>
+            <option value="analyst" t-att-selected="onboarding.occupation == 'analyst'">Analyst</option>
+            <option value="other" t-att-selected="onboarding.occupation == 'other'">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Next of Kin</label>
+          <input class="form-control" type="text" name="next_of_kin" t-att-value="onboarding.next_of_kin or ''"/>
+        </div>
+      </div>
+    </div>
+  </template>
+</odoo>

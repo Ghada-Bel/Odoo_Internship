@@ -1,0 +1,21 @@
+<odoo>
+  <template id="references_step">
+    <div class="row">
+      <div class="col-md-4">
+        <label class="form-label">Reference Name</label>
+        <input class="form-control" type="text" name="ref_name"
+               t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].name) or ''"/>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Company/Organization</label>
+        <input class="form-control" type="text" name="ref_company"
+               t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].company) or ''"/>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Phone</label>
+        <input class="form-control" type="text" name="ref_phone"
+               t-att-value="(onboarding.reference_ids and onboarding.reference_ids[0].phone) or ''"/>
+      </div>
+    </div>
+  </template>
+</odoo>

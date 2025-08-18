@@ -1,0 +1,42 @@
+<odoo>
+  <!-- Form view -->
+  <record id="view_form_board_position" model="ir.ui.view">
+    <field name="name">board.position.form</field>
+    <field name="model">board.position</field>
+    <field name="arch" type="xml">
+      <form string="Board Position">
+        <group>
+          <field name="title"/>
+          <field name="organization"/>
+          <field name="is_vacant"/>
+          <field name="requested_by"/>
+          <field name="status"/>
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <!-- Tree (list) view -->
+  <record id="view_tree_board_position" model="ir.ui.view">
+    <field name="name">board.position.tree</field>
+    <field name="model">board.position</field>
+    <field name="arch" type="xml">
+      <tree string="Board Positions">
+        <field name="title"/>
+        <field name="organization"/>
+        <field name="is_vacant"/>
+        <field name="status"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- Action -->
+  <record id="action_board_position" model="ir.actions.act_window">
+    <field name="name">Board Positions</field>
+    <field name="res_model">board.position</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- Menu item -->
+  <menuitem id="menu_board_position" name="Board Positions" parent="menu_board_root" action="action_board_position"/>
+</odoo>

@@ -1,0 +1,115 @@
+<odoo>
+    <!-- Technical Skills -->
+    <record id="skill_technical_python" model="onboarding.skill">
+        <field name="name">Python</field>
+        <field name="skill_type">technical</field>
+    </record>
+    <record id="skill_technical_java" model="onboarding.skill">
+        <field name="name">Java</field>
+        <field name="skill_type">technical</field>
+    </record>
+    <record id="skill_technical_sql" model="onboarding.skill">
+        <field name="name">SQL</field>
+        <field name="skill_type">technical</field>
+    </record>
+    <record id="skill_technical_linux" model="onboarding.skill">
+        <field name="name">Linux</field>
+        <field name="skill_type">technical</field>
+    </record>
+    <record id="skill_technical_git" model="onboarding.skill">
+        <field name="name">Git</field>
+        <field name="skill_type">technical</field>
+    </record>
+    <record id="skill_technical_docker" model="onboarding.skill">
+        <field name="name">Docker</field>
+        <field name="skill_type">technical</field>
+    </record>
+
+    <!-- Interpersonal Skills -->
+    <record id="skill_interpersonal_teamwork" model="onboarding.skill">
+        <field name="name">Teamwork</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+    <record id="skill_interpersonal_communication" model="onboarding.skill">
+        <field name="name">Communication</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+    <record id="skill_interpersonal_negotiation" model="onboarding.skill">
+        <field name="name">Negotiation</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+    <record id="skill_interpersonal_empathy" model="onboarding.skill">
+        <field name="name">Empathy</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+    <record id="skill_interpersonal_conflict" model="onboarding.skill">
+        <field name="name">Conflict Resolution</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+
+    <!-- Management Skills -->
+    <record id="skill_management_leadership" model="onboarding.skill">
+        <field name="name">Leadership</field>
+        <field name="skill_type">management</field>
+    </record>
+    <record id="skill_management_project" model="onboarding.skill">
+        <field name="name">Project Management</field>
+        <field name="skill_type">management</field>
+    </record>
+    <record id="skill_management_time" model="onboarding.skill">
+        <field name="name">Time Management</field>
+        <field name="skill_type">management</field>
+    </record>
+    <record id="skill_management_delegation" model="onboarding.skill">
+        <field name="name">Delegation</field>
+        <field name="skill_type">management</field>
+    </record>
+    <record id="skill_management_strategic" model="onboarding.skill">
+        <field name="name">Strategic Planning</field>
+        <field name="skill_type">management</field>
+    </record>
+
+    <!-- Cognitive Skills -->
+    <record id="skill_cognitive_analysis" model="onboarding.skill">
+        <field name="name">Analytical Thinking</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+    <record id="skill_cognitive_problem" model="onboarding.skill">
+        <field name="name">Problem Solving</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+    <record id="skill_cognitive_creativity" model="onboarding.skill">
+        <field name="name">Creativity</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+    <record id="skill_cognitive_decision" model="onboarding.skill">
+        <field name="name">Decision Making</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+    <record id="skill_cognitive_learning" model="onboarding.skill">
+        <field name="name">Fast Learning</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+
+    <!-- Personal Attributes -->
+    <record id="skill_personal_ethics" model="onboarding.skill">
+        <field name="name">Work Ethics</field>
+        <field name="skill_type">personal</field>
+    </record>
+    <record id="skill_personal_adaptability" model="onboarding.skill">
+        <field name="name">Adaptability</field>
+        <field name="skill_type">personal</field>
+    </record>
+    <record id="skill_personal_resilience" model="onboarding.skill">
+        <field name="name">Resilience</field>
+        <field name="skill_type">personal</field>
+    </record>
+    <record id="skill_personal_detail" model="onboarding.skill">
+        <field name="name">Attention to Detail</field>
+        <field name="skill_type">personal</field>
+    </record>
+    <record id="skill_personal_accountability" model="onboarding.skill">
+        <field name="name">Accountability</field>
+        <field name="skill_type">personal</field>
+    </record>
+</odoo>

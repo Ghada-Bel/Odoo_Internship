@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="mail_template_verification_code" model="mail.template">
+            <field name="name">Candidate Verification Mail</field>
+            <field name="model_id" ref="candidate_portal.model_candidate_portal_verification"/>
+            <field name="subject">Your Verification Code</field>
+            <field name="email_from">${(user.email or 'noreply@example.com')|safe}</field>
+            <field name="body_html" type="html">
+                <![CDATA[
+                <p>Hello,</p>
+                <p>Your verification code is <strong>${object.code}</strong>.</p>
+                <p>This code expires in 10 minutes.</p>
+                ]]>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,29 @@
+<odoo>
+  <data noupdate="1">
+    <template id="login_template_inherit_verified_toast" inherit_id="auth_signup.login">
+      
+      <!-- Inject the toast alert -->
+      <xpath expr="//form" position="before">
+        <div id="verify-toast" class="alert alert-success d-none" role="alert">
+          Signup successful! You can now log in.
+        </div>
+      </xpath>
+
+      <!-- Inject JS to trigger toast on ?verified=1 -->
+      <xpath expr="//t[@t-call-assets='web.assets_frontend']" position="inside">
+        <script type="text/javascript">
+          document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get("verified") === "1") {
+              const toast = document.getElementById("verify-toast");
+              if (toast) {
+                toast.classList.remove("d-none");
+              }
+            }
+          });
+        </script>
+      </xpath>
+
+    </template>
+  </data>
+</odoo>

@@ -1,0 +1,47 @@
+<odoo>
+  <!-- Form view -->
+  <record id="view_form_board_member" model="ir.ui.view">
+    <field name="name">board.member.form</field>
+    <field name="model">board.member</field>
+    <field name="arch" type="xml">
+      <form string="Board Member">
+        <group>
+          <field name="name"/>
+          <field name="email"/>
+          <field name="phone"/>
+          <field name="assigned_position_id"/>
+          <field name="term_start"/>
+          <field name="term_end"/>
+          <field name="state"/>
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <!-- Tree (list) view -->
+  <record id="view_tree_board_member" model="ir.ui.view">
+    <field name="name">board.member.tree</field>
+    <field name="model">board.member</field>
+    <field name="arch" type="xml">
+      <tree string="Board Members">
+        <field name="name"/>
+        <field name="email"/>
+        <field name="assigned_position_id"/>
+        <field name="term_start"/>
+        <field name="state"/>
+      </tree>
+    </field>
+  </record>
+
+  <!-- Action (backend entry point) -->
+  <record id="action_board_member" model="ir.actions.act_window">
+    <field name="name">Board Members</field>
+    <field name="res_model">board.member</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <!-- Menu items -->
+  <menuitem id="menu_board_root" name="Board Assignment"/>
+  <menuitem id="menu_board_member" name="Board Members" parent="menu_board_root" action="action_board_member"/>
+</odoo>
+

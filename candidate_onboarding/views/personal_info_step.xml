@@ -1,0 +1,43 @@
+<odoo>
+  <template id="personal_info_step">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">First Name</label>
+          <input class="form-control" type="text" name="first_name" t-att-value="onboarding.first_name or ''" required="required"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Last Name</label>
+          <input class="form-control" type="text" name="last_name" t-att-value="onboarding.last_name or ''" required="required"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">National ID</label>
+          <input class="form-control" type="text" name="id_number" t-att-value="onboarding.id_number or ''"/>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">Date of Birth</label>
+          <input class="form-control" type="date" name="birth_date" t-att-value="onboarding.birth_date or ''"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Gender</label>
+          <select class="form-select" name="gender">
+            <option value="" t-att-selected="not onboarding.gender">--</option>
+            <option value="male" t-att-selected="onboarding.gender == 'male'">Male</option>
+            <option value="female" t-att-selected="onboarding.gender == 'female'">Female</option>
+            <option value="other" t-att-selected="onboarding.gender == 'other'">Other</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Marital Status</label>
+          <select class="form-select" name="marital_status">
+            <option value="" t-att-selected="not onboarding.marital_status">--</option>
+            <option value="single" t-att-selected="onboarding.marital_status == 'single'">Single</option>
+            <option value="married" t-att-selected="onboarding.marital_status == 'married'">Married</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </template>
+</odoo>

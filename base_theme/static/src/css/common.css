@@ -1,0 +1,77 @@
+/* Header & footer */
+.navbar-brand img {
+  background-color: red !important;
+  border-radius: 5px;
+  height: 60px;
+}
+
+.footer {
+  background-color: #f1f1f1;
+  padding: 20px 0;
+  text-align: center;
+}
+
+/* Common form styling */
+#signupForm .form-group {
+  margin-bottom: 1.5rem;
+}
+
+#signupForm label {
+  font-weight: 500;
+}
+
+#signupForm input.form-control {
+  border-radius: 0.4rem;
+  padding: 0.75rem;
+  padding-right: 2.5rem; /* space for eye icon */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Phone number intl-tel-input override */
+.iti {
+  width: 100%;
+}
+
+.iti input {
+  width: 100% !important;
+  padding-left: 52px !important;
+}
+
+input[type="tel"].form-control {
+  padding-left: 3.5rem;
+  height: calc(2.25rem + 0.5rem + 2px);
+}
+
+/* Success & error for password match */
+#passwordMatchMessage.text-success {
+  color: green !important;
+}
+
+#passwordMatchMessage.text-danger {
+  color: red !important;
+}
+
+/* Eye icon styling inside input */
+.position-relative {
+  position: relative;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #999;
+  font-size: 1rem;
+  z-index: 2;
+}
+
+/* Button styling */
+#signupForm button.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 500;
+}

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_board_member_user,access.board.member.user,model_board_member,base.group_user,1,1,1,1
+access_board_position_user,access.board.position.user,model_board_position,base.group_user,1,1,1,1
+

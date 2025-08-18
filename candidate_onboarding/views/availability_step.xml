@@ -1,0 +1,14 @@
+<odoo>
+  <template id="availability_step">
+    <div class="mb-3">
+      <label class="form-label">Availability</label>
+      <select class="form-select" name="availability">
+        <option value="" t-att-selected="not onboarding.availability">--</option>
+        <option value="immediate" t-att-selected="onboarding.availability == 'immediate'">Immediately</option>
+        <option value="1_month" t-att-selected="onboarding.availability == '1_month'">Within 1 Month</option>
+        <option value="3_months" t-att-selected="onboarding.availability == '3_months'">Within 3 Months</option>
+        <option value="negotiable" t-att-selected="onboarding.availability == 'negotiable'">Negotiable</option>
+      </select>
+    </div>
+  </template>
+</odoo>

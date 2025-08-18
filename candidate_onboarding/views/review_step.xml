@@ -1,0 +1,18 @@
+<odoo>
+  <template id="review_step">
+    <div class="mb-3">
+      <h4>Application Review</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <p><strong>Name:</strong> <t t-esc="(onboarding.first_name or '') + ' ' + (onboarding.last_name or '')"/></p>
+          <p><strong>Phone:</strong> <t t-esc="onboarding.phone"/></p>
+          <p><strong>Availability:</strong> <t t-esc="onboarding.availability"/></p>
+        </div>
+        <div class="col-md-6">
+          <p><strong>ID Number:</strong> <t t-esc="onboarding.id_number"/></p>
+          <p><strong>Qualification:</strong> <t t-esc="onboarding.qualification"/></p>
+        </div>
+      </div>
+    </div>
+  </template>
+</odoo>

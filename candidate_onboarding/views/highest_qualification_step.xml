@@ -1,0 +1,33 @@
+<odoo>
+  <template id="highest_qualification_step">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">Highest Qualification</label>
+          <select class="form-select" name="qualification">
+            <option value="" t-att-selected="not onboarding.qualification">--</option>
+            <option value="phd" t-att-selected="onboarding.qualification == 'phd'">PhD</option>
+            <option value="master" t-att-selected="onboarding.qualification == 'master'">Master's Degree</option>
+            <option value="bachelor" t-att-selected="onboarding.qualification == 'bachelor'">Bachelor's Degree</option>
+            <option value="diploma" t-att-selected="onboarding.qualification == 'diploma'">Diploma</option>
+            <option value="certificate" t-att-selected="onboarding.qualification == 'certificate'">Certificate</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Field of Study</label>
+          <input class="form-control" type="text" name="field_of_study" t-att-value="onboarding.field_of_study or ''"/>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="mb-3">
+          <label class="form-label">Institution</label>
+          <input class="form-control" type="text" name="institution" t-att-value="onboarding.institution or ''"/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Year of Graduation</label>
+          <input class="form-control" type="number" name="graduation_year" t-att-value="onboarding.graduation_year or ''" min="1900" max="2100"/>
+        </div>
+      </div>
+    </div>
+  </template>
+</odoo>

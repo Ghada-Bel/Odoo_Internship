@@ -1,0 +1,56 @@
+<odoo>
+  <template id="signup_template" name="Candidate Signup">
+    <t t-call="website.layout">
+      <div class="container mt-5 mb-5" style="max-width: 600px;">
+        <h2 class="mb-4">Candidate Sign Up</h2>
+        <form action="/candidate/signup/submit" method="post" id="signupForm">
+
+          <!-- First Name -->
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="first_name" id="first_name" required="required" class="form-control"/>
+            <small id="firstNameError" class="text-danger d-none">This field can't have special characters or numbers</small>
+          </div>
+
+          <!-- Last Name -->
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="last_name" id="last_name" required="required" class="form-control"/>
+            <small id="lastNameError" class="text-danger d-none">This field can't have special characters or numbers</small>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" id="email" required="required" class="form-control"/>
+            <small id="emailError" class="text-danger d-none">Please enter a valid email address</small>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="tel" name="phone" id="phone" required="required" class="form-control"/>
+            <small id="phoneError" class="text-danger d-none">Invalid phone number</small>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group position-relative">
+            <label>Password</label>
+            <input type="password" name="password" id="password" class="form-control" required="required"/>
+            <i class="fa fa-eye password-toggle-icon" onclick="togglePasswordVisibility('password', this)"></i>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="form-group position-relative">
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password" id="confirm_password" class="form-control" required="required"/>
+            <i class="fa fa-eye password-toggle-icon" onclick="togglePasswordVisibility('confirm_password', this)"></i>
+            <small id="passwordMatchMessage" class="d-none mt-2"></small>
+          </div>
+
+          <button type="submit" class="btn btn-primary mt-3">Sign Up</button>
+        </form>
+      </div>
+    </t>
+  </template>
+</odoo>

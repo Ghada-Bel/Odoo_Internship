@@ -1,0 +1,29 @@
+<odoo>
+  <template id="other_qualifications_step">
+    <div class="row">
+      <div class="col-md-6">
+        <label class="form-label">Qualification</label>
+        <select class="form-select" name="oq_qualification">
+          <option value="">--</option>
+          <option value="phd">PhD</option>
+          <option value="master">Master's Degree</option>
+          <option value="bachelor">Bachelor's Degree</option>
+          <option value="diploma">Diploma</option>
+          <option value="certificate">Certificate</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Field of Study</label>
+        <input class="form-control" type="text" name="oq_field"/>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label class="form-label">Institution</label>
+        <input class="form-control" type="text" name="oq_institution"/>
+      </div>
+      <div class="col-md-6 mt-3">
+        <label class="form-label">Year</label>
+        <input class="form-control" type="number" name="oq_year" min="1900" max="2100"/>
+      </div>
+    </div>
+  </template>
+</odoo>

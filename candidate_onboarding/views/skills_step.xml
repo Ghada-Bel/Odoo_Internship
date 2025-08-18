@@ -1,0 +1,54 @@
+<odoo>
+  <template id="skills_step">
+    <!-- Each select is a multi-select; controller will map to M2M -->
+    <div class="mb-4">
+      <h4>Technical Skills</h4>
+      <select class="form-select" name="technical_skill_ids" multiple="multiple">
+        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','technical')])" t-as="s">
+          <option t-att-value="s.id" t-att-selected="s in onboarding.technical_skill_ids"><t t-esc="s.name"/></option>
+        </t>
+      </select>
+      <input class="form-control mt-2" type="text" name="other_technical_skill" placeholder="Other technical skills" t-att-value="onboarding.other_technical_skill or ''"/>
+    </div>
+
+    <div class="mb-4">
+      <h4>Interpersonal Skills</h4>
+      <select class="form-select" name="interpersonal_skill_ids" multiple="multiple">
+        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','interpersonal')])" t-as="s">
+          <option t-att-value="s.id" t-att-selected="s in onboarding.interpersonal_skill_ids"><t t-esc="s.name"/></option>
+        </t>
+      </select>
+      <input class="form-control mt-2" type="text" name="other_interpersonal_skill" placeholder="Other interpersonal skills" t-att-value="onboarding.other_interpersonal_skill or ''"/>
+    </div>
+
+    <div class="mb-4">
+      <h4>Management Skills</h4>
+      <select class="form-select" name="management_skill_ids" multiple="multiple">
+        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','management')])" t-as="s">
+          <option t-att-value="s.id" t-att-selected="s in onboarding.management_skill_ids"><t t-esc="s.name"/></option>
+        </t>
+      </select>
+      <input class="form-control mt-2" type="text" name="other_management_skill" placeholder="Other management skills" t-att-value="onboarding.other_management_skill or ''"/>
+    </div>
+
+    <div class="mb-4">
+      <h4>Cognitive Skills</h4>
+      <select class="form-select" name="cognitive_skill_ids" multiple="multiple">
+        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','cognitive')])" t-as="s">
+          <option t-att-value="s.id" t-att-selected="s in onboarding.cognitive_skill_ids"><t t-esc="s.name"/></option>
+        </t>
+      </select>
+      <input class="form-control mt-2" type="text" name="other_cognitive_skill" placeholder="Other cognitive skills" t-att-value="onboarding.other_cognitive_skill or ''"/>
+    </div>
+
+    <div class="mb-4">
+      <h4>Personal Attributes</h4>
+      <select class="form-select" name="personal_attribute_ids" multiple="multiple">
+        <t t-foreach="request.env['onboarding.skill'].sudo().search([('skill_type','=','personal')])" t-as="s">
+          <option t-att-value="s.id" t-att-selected="s in onboarding.personal_attribute_ids"><t t-esc="s.name"/></option>
+        </t>
+      </select>
+      <input class="form-control mt-2" type="text" name="other_personal_attribute" placeholder="Other personal attributes" t-att-value="onboarding.other_personal_attribute or ''"/>
+    </div>
+  </template>
+</odoo>

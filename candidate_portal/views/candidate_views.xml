@@ -1,0 +1,44 @@
+<odoo>
+  <record id="view_candidate_profile_tree" model="ir.ui.view">
+    <field name="name">candidate.profile.tree</field>
+    <field name="model">candidate.profile</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="first_name"/>
+        <field name="last_name"/>
+        <field name="phone"/>
+        <field name="user_id"/>
+      </tree>
+    </field>
+  </record>
+
+  <record id="view_candidate_profile_form" model="ir.ui.view">
+    <field name="name">candidate.profile.form</field>
+    <field name="model">candidate.profile</field>
+    <field name="arch" type="xml">
+      <form>
+        <group>
+          <field name="user_id"/>
+          <field name="first_name"/>
+          <field name="last_name"/>
+          <field name="phone"/>
+          <field name="education"/>
+          <field name="motivation_letter"/>
+        </group>
+      </form>
+    </field>
+  </record>
+
+  <record id="action_candidate_profile" model="ir.actions.act_window">
+    <field name="name">Candidate Profiles</field>
+    <field name="res_model">candidate.profile</field>
+    <field name="view_mode">tree,form</field>
+  </record>
+
+  <menuitem id="menu_candidate_root" name="Candidate Portal" parent="base.menu_custom" sequence="10"/>
+
+
+  <menuitem id="menu_candidate_profile" name="Candidate Profiles"
+            parent="menu_candidate_root"
+            action="action_candidate_profile"/>
+</odoo>
