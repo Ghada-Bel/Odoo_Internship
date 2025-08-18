@@ -1,65 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Progress Tracker -->
-    <template id="progress_bar">
-        <div class="progress-tracker mb-3">
-            <t t-foreach="completed_steps" t-as="step">
-                <span class="badge bg-success me-1" t-attf-title="#{step.name} (Completed)">
-                    <i class="fa fa-check"/> <t t-esc="step.sequence"/>
-                </span>
-            </t>
-            <span class="badge bg-primary me-1" t-attf-title="#{current_step.name}">
-                <t t-esc="current_step.sequence"/>
-            </span>
-            <t t-foreach="remaining_steps" t-as="step">
-                <span class="badge bg-secondary me-1" t-attf-title="#{step.name}">
-                    <t t-esc="step.sequence"/>
-                </span>
-            </t>
-            <div class="progress mt-2">
-                <div class="progress-bar"
-                     role="progressbar"
-                     t-attf-style="width: #{int(progress)}%"
-                     t-att-aria-valuenow="int(progress)"
-                     aria-valuemin="0" aria-valuemax="100">
-                    <t t-esc="int(progress)"/>%
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <!-- Main Template -->
-    <template id="onboarding_main" name="Dynamic Onboarding">
+    <template id="onboarding_main" name="Candidate Onboarding Main">
         <t t-call="website.layout">
-            <div class="container mt-4">
-                <t t-call="candidate_onboarding.progress_bar"/>
-                <div class="card shadow-sm">
-                    <div class="card-header">
-                        <h3 class="mb-0" t-esc="current_step.name"/>
+            <t t-set="title">Candidate Onboarding</t>
+            <div class="container-fluid bg-light min-vh-100 py-4">
+                <div class="container">
+                    <!-- Header -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <img src="/candidate_onboarding/static/src/img/logo.png" 
+                                         alt="CG MIS" 
+                                         height="40" 
+                                         class="me-3"
+                                         onerror="this.style.display='none'"/>
+                                    <h2 class="mb-0 text-primary">CG MIS</h2>
+                                    <small class="text-muted ms-2">Empowering Governance</small>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="me-3">
+                                        <div class="text-end">
+                                            <div class="badge bg-primary">
+                                                <span t-esc="onboarding.user_id.name or 'User'"/>
+                                            </div>
+                                        </div>
+                                        <small class="text-muted">Signed in</small>
+                                    </div>
+                                    <a href="/web/session/logout" class="btn btn-outline-secondary btn-sm">
+                                        <i class="fa fa-sign-out"></i> Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <form t-att-action="'/onboarding/save'"
-                          method="post"
-                          enctype="multipart/form-data">
-                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                        <div class="card-body">
-                            <!-- Render the step's QWeb template -->
-                            <t t-call="current_step.view_id.key"/>
+
+                    <!-- Progress Bar -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card shadow-sm">
+                                <div class="card-body p-4">
+                                    <div class="progress-container">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h5 class="mb-0">Candidate Onboarding Progress</h5>
+                                            <span class="badge bg-info fs-6">
+                                                Step <t t-esc="(onboarding.template_id.step_ids.sorted('sequence').mapped('id').index(onboarding.current_step_id.id) + 1) if onboarding.current_step_id else 1"/> 
+                                                of <t t-esc="len(onboarding.template_id.step_ids)"/>
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- Step indicators -->
+                                        <div class="step-indicators d-flex justify-content-between mb-3">
+                                            <t t-foreach="onboarding.template_id.step_ids.sorted('sequence')" t-as="step">
+                                                <t t-set="step_number" t-value="step_index + 1"/>
+                                                <t t-set="is_current" t-value="step.id == onboarding.current_step_id.id"/>
+                                                <t t-set="is_completed" t-value="step.id in onboarding.completed_step_ids.mapped('id')"/>
+                                                
+                                                <div class="step-indicator text-center">
+                                                    <div t-attf-class="step-circle #{('active' if is_current else '')} #{('completed' if is_completed else '')}">
+                                                        <t t-if="is_completed">
+                                                            <i class="fa fa-check text-white"></i>
+                                                        </t>
+                                                        <t t-else="">
+                                                            <span t-esc="step_number"/>
+                                                        </t>
+                                                    </div>
+                                                    <div class="step-label">
+                                                        <small t-esc="step.name"/>
+                                                    </div>
+                                                </div>
+                                                
+                                                <!-- Connector line (not for last step) -->
+                                                <t t-if="not step_last">
+                                                    <div t-attf-class="step-connector #{('completed' if is_completed else '')}"></div>
+                                                </t>
+                                            </t>
+                                        </div>
+                                        
+                                        <!-- Progress bar -->
+                                        <div class="progress" style="height: 8px;">
+                                            <div class="progress-bar bg-success" 
+                                                 role="progressbar" 
+                                                 t-attf-style="width: #{progress}%"
+                                                 t-attf-aria-valuenow="#{progress}" 
+                                                 aria-valuemin="0" 
+                                                 aria-valuemax="100">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-footer d-flex justify-content-between">
-                            <button t-if="current_step.sequence &gt; 1"
-                                    class="btn btn-secondary"
-                                    type="submit"
-                                    name="prev_step"
-                                    value="1">
-                                Previous
-                            </button>
-                            <button class="btn btn-primary ms-auto"
-                                    type="submit"
-                                    name="next_step"
-                                    value="1">
-                                Save &amp; Continue
-                            </button>
+                    </div>
+
+                    <!-- Error Display -->
+                    <t t-if="error">
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    <i class="fa fa-exclamation-triangle me-2"></i>
+                                    <strong>Error:</strong> <t t-esc="error"/>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            </div>
                         </div>
-                    </form>
+                    </t>
+
+                    <!-- Main Form -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card shadow-sm">
+                                <div class="card-body p-4">
+                                    <form method="post" action="/onboarding/save" enctype="multipart/form-data">
+                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                        
+                                        <!-- Dynamic Step Content -->
+                                        <t t-if="current_step">
+                                            <!-- Personal Information Step -->
+                                            <t t-if="current_step.name == 'Personal Information'">
+                                                <t t-call="candidate_onboarding.personal_info_step"/>
+                                            </t>
+                                            
+                                            <!-- Additional Information Step -->
+                                            <t t-elif="current_step.name == 'Additional Information'">
+                                                <t t-call="candidate_onboarding.additional_info_step"/>
+                                            </t>
+                                            
+                                            <!-- Highest Qualification Step -->
+                                            <t t-elif="current_step.name == 'Highest Qualification'">
+                                                <t t-call="candidate_onboarding.highest_qualification_step"/>
+                                            </t>
+                                            
+                                            <!-- Other Qualifications Step -->
+                                            <t t-elif="current_step.name == 'Other Qualifications'">
+                                                <t t-call="candidate_onboarding.other_qualifications_step"/>
+                                            </t>
+                                            
+                                            <!-- Work Experience Step -->
+                                            <t t-elif="current_step.name == 'Work Experience'">
+                                                <t t-call="candidate_onboarding.work_experience_step"/>
+                                            </t>
+                                            
+                                            <!-- Skills Step -->
+                                            <t t-elif="current_step.name == 'Skills'">
+                                                <t t-call="candidate_onboarding.skills_step"/>
+                                            </t>
+                                            
+                                            <!-- Availability Step -->
+                                            <t t-elif="current_step.name == 'Availability'">
+                                                <t t-call="candidate_onboarding.availability_step"/>
+                                            </t>
+                                            
+                                            <!-- References Step -->
+                                            <t t-elif="current_step.name == 'References'">
+                                                <t t-call="candidate_onboarding.references_step"/>
+                                            </t>
+                                            
+                                            <!-- Documents Step -->
+                                            <t t-elif="current_step.name == 'Documents'">
+                                                <t t-call="candidate_onboarding.documents_step"/>
+                                            </t>
+                                            
+                                            <!-- Default fallback -->
+                                            <t t-else="">
+                                                <div class="text-center py-5">
+                                                    <h4>Step: <t t-esc="current_step.name"/></h4>
+                                                    <p class="text-muted">This step is being configured.</p>
+                                                    <div class="d-flex justify-content-between mt-4">
+                                                        <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary">
+                                                            <i class="fa fa-arrow-left me-2"></i>Previous
+                                                        </button>
+                                                        <button type="submit" name="next_step" value="1" class="btn btn-primary">
+                                                            Next<i class="fa fa-arrow-right ms-2"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </t>
+                                        
+                                        <t t-else="">
+                                            <div class="text-center py-5">
+                                                <h4>Welcome to Candidate Onboarding</h4>
+                                                <p class="text-muted">Let's get started with your profile setup.</p>
+                                                <button type="submit" name="next_step" value="1" class="btn btn-success btn-lg">
+                                                    Start Onboarding Process
+                                                </button>
+                                            </div>
+                                        </t>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </t>

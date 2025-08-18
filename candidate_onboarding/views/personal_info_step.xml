@@ -1,43 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="personal_info_step">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label">First Name</label>
-          <input class="form-control" type="text" name="first_name" t-att-value="onboarding.first_name or ''" required="required"/>
+    <template id="personal_info_step" name="Personal Information Step">
+        <div class="step-content" data-step="personal_info">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="mb-4">Personal Information</h4>
+                    <p class="text-muted mb-4">Please provide your basic personal information. <span class="text-danger">*</span> indicates required fields.</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- First Name -->
+                <div class="col-md-6 mb-3">
+                    <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        <input type="text" 
+                               class="form-control" 
+                               id="first_name" 
+                               name="first_name" 
+                               placeholder="Fadwa"
+                               t-att-value="onboarding.first_name or ''" 
+                               required="true"/>
+                    </div>
+                </div>
+                
+                <!-- Surname -->
+                <div class="col-md-6 mb-3">
+                    <label for="surname" class="form-label">Surname <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        <input type="text" 
+                               class="form-control" 
+                               id="surname" 
+                               name="surname" 
+                               placeholder="Hosni"
+                               t-att-value="onboarding.surname or ''" 
+                               required="true"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- ID Number -->
+                <div class="col-md-6 mb-3">
+                    <label for="id_number" class="form-label">ID Number <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+                        <input type="text" 
+                               class="form-control" 
+                               id="id_number" 
+                               name="id_number" 
+                               placeholder="42-210739 1 42"
+                               t-att-value="onboarding.id_number or ''" 
+                               required="true"/>
+                    </div>
+                </div>
+                
+                <!-- Email Address -->
+                <div class="col-md-6 mb-3">
+                    <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                        <input type="email" 
+                               class="form-control" 
+                               id="email" 
+                               name="email" 
+                               placeholder="fadwahy30@gmail.com"
+                               t-att-value="onboarding.email or ''" 
+                               required="true"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- Gender -->
+                <div class="col-md-6 mb-3">
+                    <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-venus-mars"></i></span>
+                        <select class="form-control" id="gender" name="gender" required="true">
+                            <option value="">Female</option>
+                            <option value="male" t-att-selected="'selected' if onboarding.gender == 'male' else None">Male</option>
+                            <option value="female" t-att-selected="'selected' if onboarding.gender == 'female' else None">Female</option>
+                            <option value="other" t-att-selected="'selected' if onboarding.gender == 'other' else None">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Date of Birth -->
+                <div class="col-md-6 mb-3">
+                    <label for="date_of_birth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                        <input type="date" 
+                               class="form-control" 
+                               id="date_of_birth" 
+                               name="date_of_birth" 
+                               placeholder="21/05/1997"
+                               t-att-value="onboarding.date_of_birth or ''" 
+                               required="true"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <!-- Marital Status -->
+                <div class="col-md-6 mb-3">
+                    <label for="marital_status" class="form-label">Marital Status <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-heart"></i></span>
+                        <select class="form-control" id="marital_status" name="marital_status" required="true">
+                            <option value="">Single</option>
+                            <option value="single" t-att-selected="'selected' if onboarding.marital_status == 'single' else None">Single</option>
+                            <option value="married" t-att-selected="'selected' if onboarding.marital_status == 'married' else None">Married</option>
+                            <option value="divorced" t-att-selected="'selected' if onboarding.marital_status == 'divorced' else None">Divorced</option>
+                            <option value="widowed" t-att-selected="'selected' if onboarding.marital_status == 'widowed' else None">Widowed</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Number of Dependencies -->
+                <div class="col-md-6 mb-3">
+                    <label for="dependencies" class="form-label">Number of Dependencies <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-users"></i></span>
+                        <input type="number" 
+                               class="form-control" 
+                               id="dependencies" 
+                               name="dependencies" 
+                               placeholder="2"
+                               min="0"
+                               t-att-value="onboarding.dependencies or '0'" 
+                               required="true"/>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12 d-flex justify-content-end">
+                    <button type="submit" name="next_step" value="1" class="btn btn-success btn-lg">
+                        Save &amp; Continue
+                        <i class="fa fa-arrow-right ms-2"></i>
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Last Name</label>
-          <input class="form-control" type="text" name="last_name" t-att-value="onboarding.last_name or ''" required="required"/>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">National ID</label>
-          <input class="form-control" type="text" name="id_number" t-att-value="onboarding.id_number or ''"/>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="mb-3">
-          <label class="form-label">Date of Birth</label>
-          <input class="form-control" type="date" name="birth_date" t-att-value="onboarding.birth_date or ''"/>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Gender</label>
-          <select class="form-select" name="gender">
-            <option value="" t-att-selected="not onboarding.gender">--</option>
-            <option value="male" t-att-selected="onboarding.gender == 'male'">Male</option>
-            <option value="female" t-att-selected="onboarding.gender == 'female'">Female</option>
-            <option value="other" t-att-selected="onboarding.gender == 'other'">Other</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Marital Status</label>
-          <select class="form-select" name="marital_status">
-            <option value="" t-att-selected="not onboarding.marital_status">--</option>
-            <option value="single" t-att-selected="onboarding.marital_status == 'single'">Single</option>
-            <option value="married" t-att-selected="onboarding.marital_status == 'married'">Married</option>
-          </select>
-        </div>
-      </div>
-    </div>
-  </template>
+    </template>
 </odoo>

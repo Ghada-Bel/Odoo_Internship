@@ -10,30 +10,28 @@
                 'required': True
             }),
             (0, 0, {
-                'name': 'Additional Information',
+                'name': 'Contact Details',
                 'sequence': 2,
                 'view_id': ref('candidate_onboarding.additional_info_step'),
                 'required': True
             }),
             (0, 0, {
-                'name': 'Highest qualification',
+                'name': 'Highest Qualification',
                 'sequence': 3,
                 'view_id': ref('candidate_onboarding.highest_qualification_step'),
                 'required': True
             }),
-
-	    (0, 0, {
+            (0, 0, {
                 'name': 'Other Qualifications',
                 'sequence': 4,
                 'view_id': ref('candidate_onboarding.other_qualifications_step'),
                 'required': False
             }),
-
             (0, 0, {
                 'name': 'Work Experience',
                 'sequence': 5,
                 'view_id': ref('candidate_onboarding.work_experience_step'),
-                'required': True
+                'required': False
             }),
             (0, 0, {
                 'name': 'Skills Assessment',
@@ -67,6 +65,4 @@
             })
         ]"/>
     </record>
-
-     
 </odoo>
