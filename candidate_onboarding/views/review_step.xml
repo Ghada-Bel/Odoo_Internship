@@ -1,16 +1,301 @@
 <odoo>
-  <template id="review_step">
-    <div class="mb-3">
-      <h4>Application Review</h4>
+  <template id="review_step" name="Application Review Step">
+    <div class="step-content" data-step="review">
       <div class="row">
-        <div class="col-md-6">
-          <p><strong>Name:</strong> <t t-esc="(onboarding.first_name or '') + ' ' + (onboarding.last_name or '')"/></p>
-          <p><strong>Phone:</strong> <t t-esc="onboarding.phone"/></p>
-          <p><strong>Availability:</strong> <t t-esc="onboarding.availability"/></p>
+        <div class="col-12">
+          <h4 class="mb-4">Application Review</h4>
+          <p class="text-muted mb-4">Please review all your information before submitting your application. You can go back to any step to make changes.</p>
         </div>
-        <div class="col-md-6">
-          <p><strong>ID Number:</strong> <t t-esc="onboarding.id_number"/></p>
-          <p><strong>Qualification:</strong> <t t-esc="onboarding.qualification"/></p>
+      </div>
+      
+      <!-- Personal Information Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h6 class="mb-0"><i class="fa fa-user me-2"></i>Personal Information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>First Name:</strong> <t t-esc="onboarding.first_name or 'Not provided'"/></p>
+              <p><strong>Surname:</strong> <t t-esc="onboarding.surname or 'Not provided'"/></p>
+              <p><strong>ID Number:</strong> <t t-esc="onboarding.id_number or 'Not provided'"/></p>
+              <p><strong>Email:</strong> <t t-esc="onboarding.email or 'Not provided'"/></p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Gender:</strong> <t t-esc="dict(onboarding._fields['gender'].selection).get(onboarding.gender) or 'Not provided'"/></p>
+              <p><strong>Date of Birth:</strong> <t t-esc="onboarding.date_of_birth or 'Not provided'"/></p>
+              <p><strong>Marital Status:</strong> <t t-esc="dict(onboarding._fields['marital_status'].selection).get(onboarding.marital_status) or 'Not provided'"/></p>
+              <p><strong>Dependencies:</strong> <t t-esc="onboarding.dependencies or '0'"/></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Information Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+          <h6 class="mb-0"><i class="fa fa-globe me-2"></i>Additional Information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Country:</strong> <t t-esc="onboarding.country.name if onboarding.country else 'Not provided'"/></p>
+              <p><strong>Phone:</strong> <t t-esc="onboarding.phone or 'Not provided'"/></p>
+              <p><strong>Physical Address:</strong> <t t-esc="onboarding.physical_address or 'Not provided'"/></p>
+              <p><strong>Citizenship:</strong> <t t-esc="onboarding.citizenship or 'Not provided'"/></p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Birthplace:</strong> <t t-esc="onboarding.birthplace or 'Not provided'"/></p>
+              <p><strong>Field:</strong> <t t-esc="onboarding.field_id.name if onboarding.field_id else 'Not provided'"/></p>
+              <p><strong>Occupation:</strong> <t t-esc="onboarding.occupation or 'Not provided'"/></p>
+              <p><strong>Next of Kin:</strong> <t t-esc="onboarding.next_of_kin or 'Not provided'"/></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Highest Qualification Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+          <h6 class="mb-0"><i class="fa fa-graduation-cap me-2"></i>Highest Qualification</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Qualification Level:</strong> <t t-esc="dict(onboarding._fields['qualification_level'].selection).get(onboarding.qualification_level) or 'Not provided'"/></p>
+              <p><strong>Field/Subject:</strong> <t t-esc="onboarding.qualification_field or 'Not provided'"/></p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Institution:</strong> <t t-esc="onboarding.institution or 'Not provided'"/></p>
+              <p><strong>Year Completed:</strong> <t t-esc="onboarding.qualification_year or 'Not provided'"/></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Qualifications Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-warning text-white">
+          <h6 class="mb-0"><i class="fa fa-certificate me-2"></i>Other Qualifications</h6>
+        </div>
+        <div class="card-body">
+          <t t-if="onboarding.other_qualification_ids">
+            <t t-foreach="onboarding.other_qualification_ids" t-as="qualification">
+              <div class="border-bottom pb-2 mb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p><strong>Qualification:</strong> <t t-esc="dict(qualification._fields['qualification'].selection).get(qualification.qualification) or 'Not specified'"/></p>
+                    <p><strong>Field of Study:</strong> <t t-esc="qualification.field_of_study or 'Not specified'"/></p>
+                  </div>
+                  <div class="col-md-6">
+                    <p><strong>Institution:</strong> <t t-esc="qualification.institution or 'Not specified'"/></p>
+                    <p><strong>Year:</strong> <t t-esc="qualification.year or 'Not specified'"/></p>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </t>
+          <t t-else="">
+            <p class="text-muted">No other qualifications provided</p>
+          </t>
+        </div>
+      </div>
+
+      <!-- Work Experience Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+          <h6 class="mb-0"><i class="fa fa-briefcase me-2"></i>Work Experience</h6>
+        </div>
+        <div class="card-body">
+          <t t-if="onboarding.work_experience_ids">
+            <t t-foreach="onboarding.work_experience_ids" t-as="experience">
+              <div class="border-bottom pb-2 mb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p><strong>Company:</strong> <t t-esc="experience.company or 'Not specified'"/></p>
+                    <p><strong>Position:</strong> <t t-esc="experience.position or 'Not specified'"/></p>
+                  </div>
+                  <div class="col-md-6">
+                    <p><strong>Start Date:</strong> <t t-esc="experience.start_date or 'Not specified'"/></p>
+                    <p><strong>End Date:</strong> <t t-esc="experience.end_date or 'Current'"/></p>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </t>
+          <t t-else="">
+            <p class="text-muted">No work experience provided</p>
+          </t>
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-dark text-white">
+          <h6 class="mb-0"><i class="fa fa-star me-2"></i>Skills</h6>
+        </div>
+        <div class="card-body">
+          <t t-if="onboarding.skill_ids">
+            <t t-set="technical_skills" t-value="onboarding.skill_ids.filtered(lambda s: s.skill_type == 'technical')"/>
+            <t t-set="interpersonal_skills" t-value="onboarding.skill_ids.filtered(lambda s: s.skill_type == 'interpersonal')"/>
+            <t t-set="management_skills" t-value="onboarding.skill_ids.filtered(lambda s: s.skill_type == 'management')"/>
+            <t t-set="cognitive_skills" t-value="onboarding.skill_ids.filtered(lambda s: s.skill_type == 'cognitive')"/>
+            <t t-set="personal_skills" t-value="onboarding.skill_ids.filtered(lambda s: s.skill_type == 'personal')"/>
+            
+            <div class="row">
+              <div class="col-md-6">
+                <t t-if="technical_skills">
+                  <p><strong>Technical Skills:</strong></p>
+                  <ul>
+                    <t t-foreach="technical_skills" t-as="skill">
+                      <li><t t-esc="skill.skill_id.name"/></li>
+                    </t>
+                  </ul>
+                </t>
+                
+                <t t-if="management_skills">
+                  <p><strong>Management Skills:</strong></p>
+                  <ul>
+                    <t t-foreach="management_skills" t-as="skill">
+                      <li><t t-esc="skill.skill_id.name"/></li>
+                    </t>
+                  </ul>
+                </t>
+              </div>
+              
+              <div class="col-md-6">
+                <t t-if="interpersonal_skills">
+                  <p><strong>Interpersonal Skills:</strong></p>
+                  <ul>
+                    <t t-foreach="interpersonal_skills" t-as="skill">
+                      <li><t t-esc="skill.skill_id.name"/></li>
+                    </t>
+                  </ul>
+                </t>
+                
+                <t t-if="cognitive_skills">
+                  <p><strong>Cognitive Skills:</strong></p>
+                  <ul>
+                    <t t-foreach="cognitive_skills" t-as="skill">
+                      <li><t t-esc="skill.skill_id.name"/></li>
+                    </t>
+                  </ul>
+                </t>
+                
+                <t t-if="personal_skills">
+                  <p><strong>Personal Attributes:</strong></p>
+                  <ul>
+                    <t t-foreach="personal_skills" t-as="skill">
+                      <li><t t-esc="skill.skill_id.name"/></li>
+                    </t>
+                  </ul>
+                </t>
+              </div>
+            </div>
+          </t>
+          <t t-else="">
+            <p class="text-muted">No skills provided</p>
+          </t>
+        </div>
+      </div>
+
+      <!-- Availability Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+          <h6 class="mb-0"><i class="fa fa-clock me-2"></i>Availability</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Available Start Date:</strong> <t t-esc="onboarding.start_date or 'Not provided'"/></p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Notice Period:</strong> <t t-esc="onboarding.notice_period or '0'"/> days</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- References Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h6 class="mb-0"><i class="fa fa-users me-2"></i>References</h6>
+        </div>
+        <div class="card-body">
+          <t t-if="onboarding.reference_ids">
+            <t t-foreach="onboarding.reference_ids" t-as="reference">
+              <div class="border-bottom pb-2 mb-2">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p><strong>Name:</strong> <t t-esc="reference.name or 'Not specified'"/></p>
+                    <p><strong>Company:</strong> <t t-esc="reference.company or 'Not specified'"/></p>
+                  </div>
+                  <div class="col-md-6">
+                    <p><strong>Phone:</strong> <t t-esc="reference.phone or 'Not specified'"/></p>
+                    <p><strong>Email:</strong> <t t-esc="reference.email or 'Not specified'"/></p>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </t>
+          <t t-else="">
+            <p class="text-muted">No references provided</p>
+          </t>
+        </div>
+      </div>
+
+      <!-- Documents Section -->
+      <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+          <h6 class="mb-0"><i class="fa fa-file-pdf me-2"></i>Documents</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>CV/Resume:</strong> 
+                <t t-if="onboarding.cv_filename">
+                  <span class="text-success"><i class="fa fa-check-circle me-1"></i><t t-esc="onboarding.cv_filename"/></span>
+                </t>
+                <t t-else="">
+                  <span class="text-warning">Not uploaded</span>
+                </t>
+              </p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Cover Letter:</strong> 
+                <t t-if="onboarding.cover_letter_filename">
+                  <span class="text-success"><i class="fa fa-check-circle me-1"></i><t t-esc="onboarding.cover_letter_filename"/></span>
+                </t>
+                <t t-else="">
+                  <span class="text-warning">Not uploaded</span>
+                </t>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Declaration Section -->
+      <div class="card mb-4 border-warning">
+        <div class="card-body">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="declaration" name="declaration" required="true">
+            <label class="form-check-label" for="declaration">
+              <strong>I declare that the information provided above is true and complete to the best of my knowledge. I understand that any false information may result in the rejection of my application or termination of employment.</strong>
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row mt-4">
+        <div class="col-12 d-flex justify-content-between">
+          <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary btn-lg">
+            <i class="fa fa-arrow-left me-2"></i>Back to Documents
+          </button>
+          <button type="submit" name="submit_application" value="1" class="btn btn-success btn-lg">
+            Submit Application
+            <i class="fa fa-check ms-2"></i>
+          </button>
         </div>
       </div>
     </div>
