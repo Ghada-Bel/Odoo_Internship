@@ -1,132 +1,262 @@
-/* Onboarding Styles - Light Blue Theme */
-.step-indicators {
-    position: relative;
+/* Onboarding Styles - Matching Design */
+.onboarding-container {
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Header Styles */
+.onboarding-header {
+    background-color: white;
+    border-bottom: 1px solid #e9ecef;
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-section {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 1rem;
+}
+
+.brand-logo .logo-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #28a745, #20c997, #17a2b8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.brand-logo .logo-text {
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.brand-title {
+    color: #2c3e50;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.brand-subtitle {
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #17a2b8;
+    text-decoration: none;
+}
+
+.login-btn {
+    border-color: #17a2b8;
+    color: #17a2b8;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.375rem;
+}
+
+.login-btn:hover {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: white;
+}
+
+/* Content Styles */
+.onboarding-content {
+    padding: 2rem 0;
+}
+
+.content-header {
+    text-align: center;
     margin-bottom: 2rem;
+}
+
+.onboarding-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+/* Progress Indicators */
+.progress-section {
+    margin-bottom: 2rem;
+}
+
+.step-indicators {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+}
+
+.step-indicators::before {
+    content: '';
+    position: absolute;
+    top: 20px;
+    left: 2rem;
+    right: 2rem;
+    height: 2px;
+    background-color: #e9ecef;
+    z-index: 1;
 }
 
 .step-indicator {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     position: relative;
     z-index: 2;
-    flex: 0 0 auto;
 }
 
 .step-circle {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #e9ecef;
-    border: 2px solid #dee2e6;
+    background-color: #6c757d;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    color: #6c757d;
-    margin-bottom: 8px;
+    color: white;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
+    border: 3px solid #6c757d;
 }
 
-.step-circle.active {
-    background-color: #17a2b8; /* Light blue */
+.step-indicator.current .step-circle {
+    background-color: #17a2b8;
     border-color: #17a2b8;
-    color: white;
     box-shadow: 0 0 0 3px rgba(23, 162, 184, 0.25);
 }
 
-.step-circle.completed {
+.step-indicator.completed .step-circle {
     background-color: #28a745;
     border-color: #28a745;
-    color: white;
 }
 
-.step-label {
-    font-size: 0.75rem;
-    color: #6c757d;
-    text-align: center;
-    max-width: 80px;
-    line-height: 1.2;
+/* Form Card */
+.form-card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    padding: 2rem;
+    margin-bottom: 2rem;
 }
 
-.step-indicator .step-circle.active + .step-label {
-    color: #17a2b8; /* Light blue */
-    font-weight: 600;
-}
-
-.step-indicator .step-circle.completed + .step-label {
-    color: #28a745;
-    font-weight: 600;
-}
-
-.step-connector {
-    flex: 1;
-    height: 2px;
-    background-color: #dee2e6;
-    margin: 0 10px;
-    position: relative;
-    top: -16px;
-    z-index: 1;
-    transition: background-color 0.3s ease;
-}
-
-.step-connector.completed {
-    background-color: #28a745;
-}
-
-/* Progress container */
-.progress-container {
-    padding: 0;
-}
-
-/* Form styling */
+/* Step Content */
 .step-content {
     min-height: 400px;
 }
 
+.step-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.step-description {
+    color: #6c757d;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+/* Form Styling */
 .form-label {
     font-weight: 600;
-    color: #495057;
+    color: #2c3e50;
     margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.form-control, .form-select {
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+    outline: none;
 }
 
 .input-group-text {
     background-color: #f8f9fa;
     border-color: #ced4da;
     color: #6c757d;
+    padding: 0.75rem;
 }
 
-.form-control:focus {
-    border-color: #80d8ff; /* Light blue focus */
-    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+/* Required field indicator */
+.text-danger {
+    color: #dc3545 !important;
 }
 
-/* Button styling */
+/* Navigation Buttons */
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.btn {
+    border-radius: 0.375rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+}
+
 .btn-primary {
-    background-color: #17a2b8; /* Light blue */
+    background-color: #17a2b8;
     border-color: #17a2b8;
+    color: white;
 }
 
 .btn-primary:hover {
     background-color: #138496;
     border-color: #117a8b;
-}
-
-.btn-primary:focus {
-    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.5);
-}
-
-.btn-success {
-    background-color: #28a745;
-    border-color: #28a745;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-    border-color: #1e7e34;
 }
 
 .btn-outline-secondary {
@@ -140,111 +270,105 @@
     color: white;
 }
 
-/* Badge styling */
-.badge.bg-info {
-    background-color: #17a2b8 !important; /* Light blue */
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
 }
 
-.badge.bg-primary {
-    background-color: #17a2b8 !important; /* Light blue */
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
 }
 
-/* Progress bar styling */
-.progress-bar.bg-success {
-    background-color: #17a2b8 !important; /* Light blue for progress */
+/* Footer */
+.onboarding-footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem 0;
+    margin-top: auto;
 }
 
-/* Text colors */
-.text-primary {
-    color: #17a2b8 !important; /* Light blue */
+.footer-text {
+    margin: 0;
+    font-size: 0.9rem;
 }
 
-/* Card styling */
-.card {
-    border: none;
-    border-radius: 10px;
+/* Error Alert */
+.error-alert {
+    margin-bottom: 2rem;
 }
 
-.card.shadow-sm {
-    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+.alert {
+    border-radius: 0.375rem;
+    padding: 1rem;
 }
 
-/* Header styling */
-.bg-light {
-    background-color: #f8f9fa !important;
-}
-
-/* Alert styling */
 .alert-danger {
-    border-left: 4px solid #dc3545;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
 }
 
-/* Qualification entry styling */
-.qualification-entry {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6 !important;
-}
-
-.qualification-entry:hover {
-    background-color: #e9ecef;
-}
-
-/* Responsive adjustments */
+/* Responsive Design */
 @media (max-width: 768px) {
+    .onboarding-content {
+        padding: 1rem 0;
+    }
+    
+    .form-card {
+        margin: 0 1rem 2rem;
+        padding: 1.5rem;
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .user-section {
+        width: 100%;
+        justify-content: center;
+    }
+    
     .step-indicators {
-        flex-wrap: wrap;
+        padding: 0 1rem;
+        overflow-x: auto;
+    }
+    
+    .step-indicators::before {
+        left: 1rem;
+        right: 1rem;
+    }
+    
+    .navigation-buttons {
+        flex-direction: column;
         gap: 1rem;
     }
     
-    .step-connector {
-        display: none;
-    }
-    
-    .step-indicator {
-        flex: 0 0 calc(25% - 0.75rem);
-        min-width: 60px;
-    }
-    
-    .step-label {
-        font-size: 0.6rem;
-        max-width: 60px;
-    }
-    
-    .step-circle {
-        width: 32px;
-        height: 32px;
-        font-size: 0.8rem;
+    .navigation-buttons .btn {
+        width: 100%;
     }
 }
 
 @media (max-width: 576px) {
-    .step-indicator {
-        flex: 0 0 calc(50% - 0.5rem);
+    .onboarding-title {
+        font-size: 1.5rem;
     }
     
-    .container {
-        padding-left: 15px;
-        padding-right: 15px;
+    .form-card {
+        margin: 0 0.5rem 1rem;
+        padding: 1rem;
     }
     
-    .card-body {
-        padding: 1.5rem !important;
+    .step-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 0.8rem;
     }
 }
 
-/* Loading states */
-.btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-/* Focus states for accessibility */
-.step-circle:focus {
-    outline: 2px solid #17a2b8; /* Light blue focus */
-    outline-offset: 2px;
-}
-
-/* Animation for step transitions */
+/* Animation */
 .step-content {
     animation: fadeIn 0.3s ease-in;
 }
@@ -260,29 +384,16 @@
     }
 }
 
-/* Custom select styling */
-.form-control, .form-select {
-    border-radius: 0.375rem;
-    border: 1px solid #ced4da;
+/* Override Odoo default styles */
+.o_main_content {
+    padding: 0 !important;
 }
 
-.form-control:focus, .form-select:focus {
-    border-color: #17a2b8; /* Light blue */
-    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+.o_action_manager .o_form_view .o_form_renderer {
+    background: transparent !important;
 }
 
-/* Input group improvements */
-.input-group .form-control:focus {
-    z-index: 3;
-}
-
-/* Required field indicator */
-.text-danger {
-    color: #dc3545 !important;
-}
-
-/* Placeholder styling */
-.form-control::placeholder {
-    color: #6c757d;
-    opacity: 0.8;
+/* Ensure our styles take precedence */
+.onboarding-container * {
+    box-sizing: border-box;
 }

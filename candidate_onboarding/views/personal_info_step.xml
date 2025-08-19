@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="personal_info_step" name="Personal Information Step">
-        <div class="step-content" data-step="personal_info">
+        <div class="step-content">
             <div class="row">
                 <div class="col-12">
-                    <h4 class="mb-4">Personal Information</h4>
-                    <p class="text-muted mb-4">Please provide your basic personal information. <span class="text-danger">*</span> indicates required fields.</p>
+                    <h4 class="step-title">Personal Information</h4>
+                    <p class="step-description">Please provide your basic personal information. <span class="text-danger">*</span> indicates required fields.</p>
                 </div>
             </div>
             
@@ -14,7 +14,9 @@
                 <div class="col-md-6 mb-3">
                     <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        <span class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </span>
                         <input type="text" 
                                class="form-control" 
                                id="first_name" 
@@ -29,7 +31,9 @@
                 <div class="col-md-6 mb-3">
                     <label for="surname" class="form-label">Surname <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        <span class="input-group-text">
+                            <i class="fas fa-user"></i>
+                        </span>
                         <input type="text" 
                                class="form-control" 
                                id="surname" 
@@ -46,7 +50,9 @@
                 <div class="col-md-6 mb-3">
                     <label for="id_number" class="form-label">ID Number <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-id-card"></i></span>
+                        <span class="input-group-text">
+                            <i class="fas fa-id-card"></i>
+                        </span>
                         <input type="text" 
                                class="form-control" 
                                id="id_number" 
@@ -61,7 +67,9 @@
                 <div class="col-md-6 mb-3">
                     <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                        <span class="input-group-text">
+                            <i class="fas fa-envelope"></i>
+                        </span>
                         <input type="email" 
                                class="form-control" 
                                id="email" 
@@ -78,9 +86,11 @@
                 <div class="col-md-6 mb-3">
                     <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-venus-mars"></i></span>
-                        <select class="form-control" id="gender" name="gender" required="true">
-                            <option value="">Female</option>
+                        <span class="input-group-text">
+                            <i class="fas fa-venus-mars"></i>
+                        </span>
+                        <select class="form-select" id="gender" name="gender" required="true">
+                            <option value="">Select Gender</option>
                             <option value="male" t-att-selected="'selected' if onboarding.gender == 'male' else None">Male</option>
                             <option value="female" t-att-selected="'selected' if onboarding.gender == 'female' else None">Female</option>
                             <option value="other" t-att-selected="'selected' if onboarding.gender == 'other' else None">Other</option>
@@ -92,12 +102,13 @@
                 <div class="col-md-6 mb-3">
                     <label for="date_of_birth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                        <span class="input-group-text">
+                            <i class="fas fa-calendar-alt"></i>
+                        </span>
                         <input type="date" 
                                class="form-control" 
                                id="date_of_birth" 
                                name="date_of_birth" 
-                               placeholder="21/05/1997"
                                t-att-value="onboarding.date_of_birth or ''" 
                                required="true"/>
                     </div>
@@ -109,9 +120,11 @@
                 <div class="col-md-6 mb-3">
                     <label for="marital_status" class="form-label">Marital Status <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-heart"></i></span>
-                        <select class="form-control" id="marital_status" name="marital_status" required="true">
-                            <option value="">Single</option>
+                        <span class="input-group-text">
+                            <i class="fas fa-heart"></i>
+                        </span>
+                        <select class="form-select" id="marital_status" name="marital_status" required="true">
+                            <option value="">Select Status</option>
                             <option value="single" t-att-selected="'selected' if onboarding.marital_status == 'single' else None">Single</option>
                             <option value="married" t-att-selected="'selected' if onboarding.marital_status == 'married' else None">Married</option>
                             <option value="divorced" t-att-selected="'selected' if onboarding.marital_status == 'divorced' else None">Divorced</option>
@@ -124,7 +137,9 @@
                 <div class="col-md-6 mb-3">
                     <label for="dependencies" class="form-label">Number of Dependencies <span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <span class="input-group-text"><i class="fa fa-users"></i></span>
+                        <span class="input-group-text">
+                            <i class="fas fa-users"></i>
+                        </span>
                         <input type="number" 
                                class="form-control" 
                                id="dependencies" 
@@ -137,13 +152,13 @@
                 </div>
             </div>
             
-            <div class="row mt-4">
-                <div class="col-12 d-flex justify-content-end">
-                    <button type="submit" name="next_step" value="1" class="btn btn-success btn-lg">
-                        Save &amp; Continue
-                        <i class="fa fa-arrow-right ms-2"></i>
-                    </button>
-                </div>
+            <!-- Navigation Buttons -->
+            <div class="navigation-buttons">
+                <div></div> <!-- Empty div to push Next button to the right -->
+                <button type="submit" name="next_step" value="1" class="btn btn-primary">
+                    Save &amp; Continue
+                    <i class="fas fa-arrow-right ms-2"></i>
+                </button>
             </div>
         </div>
     </template>

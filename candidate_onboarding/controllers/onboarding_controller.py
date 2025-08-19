@@ -3,7 +3,7 @@ import base64
 import re
 from datetime import datetime
 
-from odoo import http
+from odoo import http, fields
 from odoo.http import request
 from odoo.exceptions import ValidationError
 
@@ -42,12 +42,12 @@ class OnboardingController(http.Controller):
                     step_data['template_id'] = default_template.id
                     request.env['onboarding.step'].sudo().create(step_data)
             
+            # Create onboarding record with fields that match DB schema
             onboarding = request.env['candidate.onboarding'].sudo().create({
                 'user_id': request.env.user.id,
                 'template_id': default_template.id,
-                'email': request.env.user.email or '',
                 'first_name': request.env.user.name.split(' ')[0] if request.env.user.name else '',
-                'surname': ' '.join(request.env.user.name.split(' ')[1:]) if request.env.user.name and len(request.env.user.name.split(' ')) > 1 else '',
+                'last_name': ' '.join(request.env.user.name.split(' ')[1:]) if request.env.user.name and len(request.env.user.name.split(' ')) > 1 else '',
             })
 
         steps = onboarding.template_id.step_ids.sorted('sequence')
@@ -58,23 +58,6 @@ class OnboardingController(http.Controller):
         # Get countries for dropdowns
         countries = request.env['res.country'].sudo().search([])
         
-        # Get fields for dropdowns  
-        fields = request.env['onboarding.field'].sudo().search([])
-        if not fields:
-            # Create default fields if none exist
-            default_fields = [
-                'Education & Training',
-                'Information Technology', 
-                'Engineering',
-                'Healthcare',
-                'Business & Management',
-                'Agriculture',
-                'Other'
-            ]
-            for field_name in default_fields:
-                request.env['onboarding.field'].sudo().create({'name': field_name})
-            fields = request.env['onboarding.field'].sudo().search([])
-
         # Get skills for skills step
         skills = request.env['onboarding.skill'].sudo().search([])
 
@@ -87,7 +70,6 @@ class OnboardingController(http.Controller):
             'total_steps': total_steps,
             'error': kw.get('error'),
             'countries': countries,
-            'fields': fields,
             'skills': skills,
         })
 
@@ -101,27 +83,22 @@ class OnboardingController(http.Controller):
             if not first_name or not re.match(r'^[a-zA-Z\s]{2,}$', first_name):
                 raise ValidationError("Please enter a valid first name (letters only, minimum 2 characters).")
             
-            # Validate surname
-            surname = post.get('surname', '').strip()
-            if not surname or not re.match(r'^[a-zA-Z\s]{2,}$', surname):
-                raise ValidationError("Please enter a valid surname (letters only, minimum 2 characters).")
+            # Validate last name
+            last_name = post.get('last_name', '').strip()
+            if not last_name or not re.match(r'^[a-zA-Z\s]{2,}$', last_name):
+                raise ValidationError("Please enter a valid last name (letters only, minimum 2 characters).")
             
             # Validate ID number
             id_number = post.get('id_number', '').strip()
             if not id_number:
                 raise ValidationError("ID Number is required.")
             
-            # Validate email
-            email = post.get('email', '').strip()
-            if not email or not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
-                raise ValidationError("Please enter a valid email address.")
-            
             # Validate gender
             if not post.get('gender'):
                 raise ValidationError("Please select your gender.")
             
             # Validate date of birth
-            dob = post.get('date_of_birth')
+            dob = post.get('birth_date')  # Changed to match DB field
             if not dob:
                 raise ValidationError("Date of birth is required.")
             try:
@@ -137,13 +114,13 @@ class OnboardingController(http.Controller):
             if not post.get('marital_status'):
                 raise ValidationError("Please select your marital status.")
             
-            # Validate dependencies
+            # Validate dependents
             try:
-                dependencies = int(post.get('dependencies', 0))
-                if dependencies < 0:
-                    raise ValidationError("Number of dependencies cannot be negative.")
+                dependents = int(post.get('dependents', 0))
+                if dependents < 0:
+                    raise ValidationError("Number of dependents cannot be negative.")
             except (ValueError, TypeError):
-                raise ValidationError("Please enter a valid number for dependencies.")
+                raise ValidationError("Please enter a valid number for dependents.")
 
         elif step_name == 'Additional Information':
             # Validate phone if provided
@@ -152,17 +129,17 @@ class OnboardingController(http.Controller):
                 raise ValidationError("Please enter a valid phone number.")
             
             # Validate country
-            if not post.get('country'):
+            if not post.get('country_id'):  # Changed to match DB field
                 raise ValidationError("Please select your country.")
 
         elif step_name == 'Highest Qualification':
-            # Validate qualification level
-            if not post.get('qualification_level'):
-                raise ValidationError("Please select your highest qualification level.")
+            # Validate qualification
+            if not post.get('qualification'):
+                raise ValidationError("Please enter your highest qualification.")
             
-            # Validate qualification field
-            if not post.get('qualification_field', '').strip():
-                raise ValidationError("Please enter your qualification field/subject.")
+            # Validate field of study
+            if not post.get('field_of_study', '').strip():
+                raise ValidationError("Please enter your field of study.")
             
             # Validate institution
             if not post.get('institution', '').strip():
@@ -209,36 +186,37 @@ class OnboardingController(http.Controller):
             if onboarding.current_step_id and onboarding.current_step_id.name != 'Review':
                 self._validate_step_data(onboarding, post, files)
 
-            # Prepare values to update
+            # Prepare values to update - Updated to match DB schema exactly
             vals = {}
 
-            # Map form fields to model fields
+            # Map form fields to model fields - matching DB columns
             field_mapping = {
                 'first_name': 'first_name',
-                'surname': 'surname', 
+                'last_name': 'last_name',
                 'id_number': 'id_number',
-                'email': 'email',
                 'gender': 'gender',
-                'date_of_birth': 'date_of_birth',
+                'birth_date': 'birth_date',  # Changed from date_of_birth
                 'marital_status': 'marital_status',
-                'dependencies': 'dependencies',
-                'country': 'country',
+                'dependents': 'dependents',  # Changed from dependencies
+                'country_id': 'country_id',  # Changed from country
                 'phone': 'phone',
                 'physical_address': 'physical_address',
                 'citizenship': 'citizenship',
                 'birthplace': 'birthplace',
-                'field_id': 'field_id',
+                'education_field': 'education_field',  # Changed from field_id
                 'occupation': 'occupation',
                 'next_of_kin': 'next_of_kin',
-                'qualification_level': 'qualification_level',
-                'qualification_field': 'qualification_field',
+                'qualification': 'qualification',  # Changed from qualification_level
+                'field_of_study': 'field_of_study',  # Changed from qualification_field
                 'institution': 'institution',
-                'qualification_year': 'qualification_year',
-                'start_date': 'start_date',
-                'notice_period': 'notice_period',
-                'availability_type': 'availability_type',
-                'work_schedule': 'work_schedule',
-                'availability_notes': 'availability_notes',
+                'graduation_year': 'graduation_year',  # Changed from qualification_year
+                'availability': 'availability',  # Simplified availability fields
+                # Skills fields matching DB
+                'other_technical_skill': 'other_technical_skill',
+                'other_interpersonal_skill': 'other_interpersonal_skill',
+                'other_management_skill': 'other_management_skill',
+                'other_cognitive_skill': 'other_cognitive_skill',
+                'other_personal_attribute': 'other_personal_attribute',
             }
 
             # Process regular fields
@@ -247,12 +225,12 @@ class OnboardingController(http.Controller):
                     value = post[form_field].strip() if isinstance(post[form_field], str) else post[form_field]
                     if value:  # Only update if value is not empty
                         # Handle special field types
-                        if model_field in ['dependencies', 'qualification_year', 'notice_period']:
+                        if model_field in ['dependents', 'graduation_year']:
                             try:
                                 vals[model_field] = int(value)
                             except (ValueError, TypeError):
                                 vals[model_field] = 0
-                        elif model_field in ['country', 'field_id'] and value.isdigit():
+                        elif model_field in ['country_id'] and value.isdigit():
                             vals[model_field] = int(value)
                         else:
                             vals[model_field] = value
@@ -282,20 +260,6 @@ class OnboardingController(http.Controller):
                 onboarding.work_experience_ids.unlink()
                 onboarding.work_experience_ids = [(0, 0, exp_vals)]
 
-            # Handle skills (multiple skill types)
-            skill_assignments = []
-            for skill_type in ['technical', 'interpersonal', 'management', 'cognitive', 'personal']:
-                field_name = f'{skill_type}_skill_ids'
-                if field_name in post:
-                    skill_ids = post.getlist(field_name)
-                    for skill_id in skill_ids:
-                        if skill_id.isdigit():
-                            skill_assignments.append((0, 0, {'skill_id': int(skill_id)}))
-            
-            if skill_assignments:
-                onboarding.skill_ids.unlink()  # Clear existing
-                onboarding.skill_ids = skill_assignments
-
             # Handle references
             if 'ref_name' in post and post['ref_name']:
                 ref_vals = {
@@ -307,13 +271,10 @@ class OnboardingController(http.Controller):
                 # Clear existing and add new
                 onboarding.reference_ids.unlink()
                 onboarding.reference_ids = [(0, 0, ref_vals)]
-
-            # Handle file uploads
-            for file_field in ('cv', 'cover_letter', 'id_document', 'certificates'):
+            # Handle file uploads - only filename fields exist in DB
+            for file_field in ('cv', 'cover_letter'):
                 file_upload = files.get(file_field)
                 if file_upload and file_upload.filename:
-                    content = file_upload.read()
-                    vals[file_field] = base64.b64encode(content)
                     vals[f"{file_field}_filename"] = file_upload.filename
 
             # Update the onboarding record
@@ -322,10 +283,6 @@ class OnboardingController(http.Controller):
 
             # Handle final submission
             if post.get('submit_application'):
-                onboarding.sudo().write({
-                    'state': 'completed',
-                    'completion_date': fields.Datetime.now(),
-                })
                 return request.redirect('/onboarding/complete')
 
             # Handle step navigation
@@ -347,7 +304,7 @@ class OnboardingController(http.Controller):
             ('user_id', '=', request.env.user.id)
         ], limit=1)
         
-        if not onboarding or onboarding.state != 'completed':
+        if not onboarding:
             return request.redirect('/onboarding')
         
         return request.render('candidate_onboarding.onboarding_complete', {

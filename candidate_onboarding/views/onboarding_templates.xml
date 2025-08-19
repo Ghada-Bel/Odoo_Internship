@@ -1,198 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <template id="onboarding_assets" name="Onboarding Assets">
+        <!-- Bootstrap 5 CSS -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"/>
+        <!-- FontAwesome 6 -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+        <!-- Custom CSS -->
+        <link href="/candidate_onboarding/static/src/css/onboarding.css" rel="stylesheet"/>
+        
+        <!-- Bootstrap 5 JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    </template>
+
     <template id="onboarding_main" name="Candidate Onboarding Main">
         <t t-call="website.layout">
             <t t-set="title">Candidate Onboarding</t>
-            <div class="container-fluid bg-light min-vh-100 py-4">
-                <div class="container">
+            
+            <!-- Include our assets -->
+            <t t-call="candidate_onboarding.onboarding_assets"/>
+            
+            <div class="onboarding-container">
+                <div class="container-fluid">
                     <!-- Header -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center">
-                                    <img src="/candidate_onboarding/static/src/img/logo.png" 
-                                         alt="CG MIS" 
-                                         height="40" 
-                                         class="me-3"
-                                         onerror="this.style.display='none'"/>
-                                    <h2 class="mb-0 text-primary">CG MIS</h2>
-                                    <small class="text-muted ms-2">Empowering Governance</small>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <div class="me-3">
-                                        <div class="text-end">
-                                            <div class="badge bg-primary">
-                                                <span t-esc="onboarding.user_id.name or 'User'"/>
+                    <div class="onboarding-header">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="header-content">
+                                        <div class="brand-section">
+                                            <div class="brand-logo">
+                                                <div class="logo-circle">
+                                                    <span class="logo-text">CG MIS</span>
+                                                </div>
+                                            </div>
+                                            <div class="brand-info">
+                                                <h2 class="brand-title">CG MIS</h2>
+                                                <small class="brand-subtitle">Empowering Governance</small>
                                             </div>
                                         </div>
-                                        <small class="text-muted">Signed in</small>
+                                        
+                                        <div class="user-section">
+                                            <div class="nav-links">
+                                                <a href="#" class="nav-link">Home</a>
+                                                <a href="#" class="nav-link">Contact Us</a>
+                                            </div>
+                                            <div class="user-actions">
+                                                <button class="btn btn-outline-primary login-btn">Login</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <a href="/web/session/logout" class="btn btn-outline-secondary btn-sm">
-                                        <i class="fa fa-sign-out"></i> Logout
-                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Progress Bar -->
-                    <div class="row mb-4">
-                        <div class="col-12">
-                            <div class="card shadow-sm">
-                                <div class="card-body p-4">
-                                    <div class="progress-container">
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                            <h5 class="mb-0">Candidate Onboarding Progress</h5>
-                                            <span class="badge bg-info fs-6">
-                                                Step <t t-esc="(onboarding.template_id.step_ids.sorted('sequence').mapped('id').index(onboarding.current_step_id.id) + 1) if onboarding.current_step_id else 1"/> 
-                                                of <t t-esc="len(onboarding.template_id.step_ids)"/>
-                                            </span>
-                                        </div>
-                                        
-                                        <!-- Step indicators -->
-                                        <div class="step-indicators d-flex justify-content-between mb-3">
+                    <div class="container">
+                        <!-- Main Content -->
+                        <div class="onboarding-content">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-10 col-xl-8">
+                                    
+                                    <!-- Title -->
+                                    <div class="content-header">
+                                        <h1 class="onboarding-title">Candidate Onboarding</h1>
+                                    </div>
+
+                                    <!-- Progress Indicators -->
+                                    <div class="progress-section">
+                                        <div class="step-indicators">
                                             <t t-foreach="onboarding.template_id.step_ids.sorted('sequence')" t-as="step">
                                                 <t t-set="step_number" t-value="step_index + 1"/>
                                                 <t t-set="is_current" t-value="step.id == onboarding.current_step_id.id"/>
                                                 <t t-set="is_completed" t-value="step.id in onboarding.completed_step_ids.mapped('id')"/>
                                                 
-                                                <div class="step-indicator text-center">
-                                                    <div t-attf-class="step-circle #{('active' if is_current else '')} #{('completed' if is_completed else '')}">
-                                                        <t t-if="is_completed">
-                                                            <i class="fa fa-check text-white"></i>
-                                                        </t>
-                                                        <t t-else="">
-                                                            <span t-esc="step_number"/>
-                                                        </t>
-                                                    </div>
-                                                    <div class="step-label">
-                                                        <small t-esc="step.name"/>
+                                                <div t-attf-class="step-indicator #{('current' if is_current else '')} #{('completed' if is_completed else '')}">
+                                                    <div class="step-circle">
+                                                        <span class="step-number" t-esc="step_number"/>
                                                     </div>
                                                 </div>
-                                                
-                                                <!-- Connector line (not for last step) -->
-                                                <t t-if="not step_last">
-                                                    <div t-attf-class="step-connector #{('completed' if is_completed else '')}"></div>
-                                                </t>
                                             </t>
                                         </div>
-                                        
-                                        <!-- Progress bar -->
-                                        <div class="progress" style="height: 8px;">
-                                            <div class="progress-bar bg-success" 
-                                                 role="progressbar" 
-                                                 t-attf-style="width: #{progress}%"
-                                                 t-attf-aria-valuenow="#{progress}" 
-                                                 aria-valuemin="0" 
-                                                 aria-valuemax="100">
+                                    </div>
+
+                                    <!-- Error Display -->
+                                    <t t-if="error">
+                                        <div class="error-alert">
+                                            <div class="alert alert-danger" role="alert">
+                                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                                <strong>Error:</strong> <t t-esc="error"/>
                                             </div>
                                         </div>
+                                    </t>
+
+                                    <!-- Main Form Card -->
+                                    <div class="form-card">
+                                        <form method="post" action="/onboarding/save" enctype="multipart/form-data" id="onboarding_form">
+                                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                            
+                                            <!-- Dynamic Step Content -->
+                                            <t t-if="current_step">
+                                                <!-- Personal Information Step -->
+                                                <t t-if="current_step.name == 'Personal Information'">
+                                                    <t t-call="candidate_onboarding.personal_info_step"/>
+                                                </t>
+                                                
+                                                <!-- Additional Information Step -->
+                                                <t t-elif="current_step.name == 'Additional Information'">
+                                                    <t t-call="candidate_onboarding.additional_info_step"/>
+                                                </t>
+                                                
+                                                <!-- Highest Qualification Step -->
+                                                <t t-elif="current_step.name == 'Highest Qualification'">
+                                                    <t t-call="candidate_onboarding.highest_qualification_step"/>
+                                                </t>
+                                                
+                                                <!-- Other Qualifications Step -->
+                                                <t t-elif="current_step.name == 'Other Qualifications'">
+                                                    <t t-call="candidate_onboarding.other_qualifications_step"/>
+                                                </t>
+                                                
+                                                <!-- Work Experience Step -->
+                                                <t t-elif="current_step.name == 'Work Experience'">
+                                                    <t t-call="candidate_onboarding.work_experience_step"/>
+                                                </t>
+                                                
+                                                <!-- Skills Step -->
+                                                <t t-elif="current_step.name == 'Skills'">
+                                                    <t t-call="candidate_onboarding.skills_step"/>
+                                                </t>
+                                                
+                                                <!-- Availability Step -->
+                                                <t t-elif="current_step.name == 'Availability'">
+                                                    <t t-call="candidate_onboarding.availability_step"/>
+                                                </t>
+                                                
+                                                <!-- References Step -->
+                                                <t t-elif="current_step.name == 'References'">
+                                                    <t t-call="candidate_onboarding.references_step"/>
+                                                </t>
+                                                
+                                                <!-- Documents Step -->
+                                                <t t-elif="current_step.name == 'Documents'">
+                                                    <t t-call="candidate_onboarding.documents_step"/>
+                                                </t>
+                                                
+                                                <!-- Review Step -->
+                                                <t t-elif="current_step.name == 'Review'">
+                                                    <t t-call="candidate_onboarding.review_step"/>
+                                                </t>
+                                                
+                                                <!-- Default fallback -->
+                                                <t t-else="">
+                                                    <div class="step-content">
+                                                        <div class="text-center py-5">
+                                                            <h4>Step: <t t-esc="current_step.name"/></h4>
+                                                            <p class="text-muted">This step is being configured.</p>
+                                                            <div class="navigation-buttons">
+                                                                <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary">
+                                                                    <i class="fas fa-arrow-left me-2"></i>Previous
+                                                                </button>
+                                                                <button type="submit" name="next_step" value="1" class="btn btn-primary">
+                                                                    Next<i class="fas fa-arrow-right ms-2"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </t>
+                                            </t>
+                                            
+                                            <t t-else="">
+                                                <div class="step-content">
+                                                    <div class="text-center py-5">
+                                                        <h4>Welcome to Candidate Onboarding</h4>
+                                                        <p class="text-muted">Let's get started with your profile setup.</p>
+                                                        <button type="submit" name="next_step" value="1" class="btn btn-success btn-lg">
+                                                            Start Onboarding Process
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Error Display -->
-                    <t t-if="error">
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <i class="fa fa-exclamation-triangle me-2"></i>
-                                    <strong>Error:</strong> <t t-esc="error"/>
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                                </div>
-                            </div>
-                        </div>
-                    </t>
-
-                    <!-- Main Form -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card shadow-sm">
-                                <div class="card-body p-4">
-                                    <form method="post" action="/onboarding/save" enctype="multipart/form-data">
-                                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                                        
-                                        <!-- Dynamic Step Content -->
-                                        <t t-if="current_step">
-                                            <!-- Personal Information Step -->
-                                            <t t-if="current_step.name == 'Personal Information'">
-                                                <t t-call="candidate_onboarding.personal_info_step"/>
-                                            </t>
-                                            
-                                            <!-- Additional Information Step -->
-                                            <t t-elif="current_step.name == 'Additional Information'">
-                                                <t t-call="candidate_onboarding.additional_info_step"/>
-                                            </t>
-                                            
-                                            <!-- Highest Qualification Step -->
-                                            <t t-elif="current_step.name == 'Highest Qualification'">
-                                                <t t-call="candidate_onboarding.highest_qualification_step"/>
-                                            </t>
-                                            
-                                            <!-- Other Qualifications Step -->
-                                            <t t-elif="current_step.name == 'Other Qualifications'">
-                                                <t t-call="candidate_onboarding.other_qualifications_step"/>
-                                            </t>
-                                            
-                                            <!-- Work Experience Step -->
-                                            <t t-elif="current_step.name == 'Work Experience'">
-                                                <t t-call="candidate_onboarding.work_experience_step"/>
-                                            </t>
-                                            
-                                            <!-- Skills Step -->
-                                            <t t-elif="current_step.name == 'Skills'">
-                                                <t t-call="candidate_onboarding.skills_step"/>
-                                            </t>
-                                            
-                                            <!-- Availability Step -->
-                                            <t t-elif="current_step.name == 'Availability'">
-                                                <t t-call="candidate_onboarding.availability_step"/>
-                                            </t>
-                                            
-                                            <!-- References Step -->
-                                            <t t-elif="current_step.name == 'References'">
-                                                <t t-call="candidate_onboarding.references_step"/>
-                                            </t>
-                                            
-                                            <!-- Documents Step -->
-                                            <t t-elif="current_step.name == 'Documents'">
-                                                <t t-call="candidate_onboarding.documents_step"/>
-                                            </t>
-                                            
-                                            <!-- Review Step -->
-                                            <t t-elif="current_step.name == 'Review'">
-                                                <t t-call="candidate_onboarding.review_step"/>
-                                            </t>
-                                            
-                                            <!-- Default fallback -->
-                                            <t t-else="">
-                                                <div class="text-center py-5">
-                                                    <h4>Step: <t t-esc="current_step.name"/></h4>
-                                                    <p class="text-muted">This step is being configured.</p>
-                                                    <div class="d-flex justify-content-between mt-4">
-                                                        <button type="submit" name="prev_step" value="1" class="btn btn-outline-secondary">
-                                                            <i class="fa fa-arrow-left me-2"></i>Previous
-                                                        </button>
-                                                        <button type="submit" name="next_step" value="1" class="btn btn-primary">
-                                                            Next<i class="fa fa-arrow-right ms-2"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </t>
-                                        </t>
-                                        
-                                        <t t-else="">
-                                            <div class="text-center py-5">
-                                                <h4>Welcome to Candidate Onboarding</h4>
-                                                <p class="text-muted">Let's get started with your profile setup.</p>
-                                                <button type="submit" name="next_step" value="1" class="btn btn-success btn-lg">
-                                                    Start Onboarding Process
-                                                </button>
-                                            </div>
-                                        </t>
-                                    </form>
+                    <!-- Footer -->
+                    <div class="onboarding-footer">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <p class="footer-text">© 2025 CG MIS . All rights reserved.</p>
                                 </div>
                             </div>
                         </div>
