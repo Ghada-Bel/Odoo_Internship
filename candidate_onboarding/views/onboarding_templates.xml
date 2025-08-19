@@ -161,6 +161,11 @@
                                                 <t t-call="candidate_onboarding.documents_step"/>
                                             </t>
                                             
+                                            <!-- Review Step -->
+                                            <t t-elif="current_step.name == 'Review'">
+                                                <t t-call="candidate_onboarding.review_step"/>
+                                            </t>
+                                            
                                             <!-- Default fallback -->
                                             <t t-else="">
                                                 <div class="text-center py-5">

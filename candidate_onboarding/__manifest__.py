@@ -23,6 +23,7 @@
    	    'views/documents_step.xml',
    	    'views/review_step.xml',
    	    'views/onboarding_templates.xml',
+	    'views/onboarding_complete.xml',
 	    'data/onboarding_steps_data.xml',
 ],
     'demo': [

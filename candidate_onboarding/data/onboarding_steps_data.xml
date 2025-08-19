@@ -2,7 +2,7 @@
     <!-- Default Onboarding Template -->
     <record id="default_template" model="onboarding.template">
         <field name="name">Standard Candidate Onboarding</field>
-        <field name="description">Complete candidate onboarding process with 9 structured steps</field>
+        <field name="description">Complete candidate onboarding process with 10 structured steps</field>
     </record>
 
     <!-- Create Steps -->
@@ -78,6 +78,14 @@
         <field name="active">True</field>
     </record>
 
+    <record id="step_review" model="onboarding.step">
+        <field name="name">Review</field>
+        <field name="sequence">100</field>
+        <field name="template_id" ref="default_template"/>
+        <field name="required">True</field>
+        <field name="active">True</field>
+    </record>
+
     <!-- Default Fields -->
     <record id="field_education" model="onboarding.field">
         <field name="name">Education &amp; Training</field>
@@ -112,5 +120,136 @@
     <record id="field_other" model="onboarding.field">
         <field name="name">Other</field>
         <field name="active">True</field>
+    </record>
+
+    <!-- Default Skills -->
+    <!-- Technical Skills -->
+    <record id="skill_programming" model="onboarding.skill">
+        <field name="name">Programming</field>
+        <field name="skill_type">technical</field>
+    </record>
+
+    <record id="skill_web_development" model="onboarding.skill">
+        <field name="name">Web Development</field>
+        <field name="skill_type">technical</field>
+    </record>
+
+    <record id="skill_database" model="onboarding.skill">
+        <field name="name">Database Management</field>
+        <field name="skill_type">technical</field>
+    </record>
+
+    <record id="skill_microsoft_office" model="onboarding.skill">
+        <field name="name">Microsoft Office</field>
+        <field name="skill_type">technical</field>
+    </record>
+
+    <record id="skill_data_analysis" model="onboarding.skill">
+        <field name="name">Data Analysis</field>
+        <field name="skill_type">technical</field>
+    </record>
+
+    <record id="skill_graphic_design" model="onboarding.skill">
+        <field name="name">Graphic Design</field>
+        <field name="skill_type">technical</field>
+    </record>
+
+    <!-- Interpersonal Skills -->
+    <record id="skill_communication" model="onboarding.skill">
+        <field name="name">Communication</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+
+    <record id="skill_teamwork" model="onboarding.skill">
+        <field name="name">Teamwork</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+
+    <record id="skill_customer_service" model="onboarding.skill">
+        <field name="name">Customer Service</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+
+    <record id="skill_public_speaking" model="onboarding.skill">
+        <field name="name">Public Speaking</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+
+    <record id="skill_negotiation" model="onboarding.skill">
+        <field name="name">Negotiation</field>
+        <field name="skill_type">interpersonal</field>
+    </record>
+
+    <!-- Management Skills -->
+    <record id="skill_project_management" model="onboarding.skill">
+        <field name="name">Project Management</field>
+        <field name="skill_type">management</field>
+    </record>
+
+    <record id="skill_leadership" model="onboarding.skill">
+        <field name="name">Leadership</field>
+        <field name="skill_type">management</field>
+    </record>
+
+    <record id="skill_strategic_planning" model="onboarding.skill">
+        <field name="name">Strategic Planning</field>
+        <field name="skill_type">management</field>
+    </record>
+
+    <record id="skill_budget_management" model="onboarding.skill">
+        <field name="name">Budget Management</field>
+        <field name="skill_type">management</field>
+    </record>
+
+    <!-- Cognitive Skills -->
+    <record id="skill_problem_solving" model="onboarding.skill">
+        <field name="name">Problem Solving</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+
+    <record id="skill_analytical_thinking" model="onboarding.skill">
+        <field name="name">Analytical Thinking</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+
+    <record id="skill_critical_thinking" model="onboarding.skill">
+        <field name="name">Critical Thinking</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+
+    <record id="skill_decision_making" model="onboarding.skill">
+        <field name="name">Decision Making</field>
+        <field name="skill_type">cognitive</field>
+    </record>
+
+    <!-- Personal Attributes -->
+    <record id="skill_attention_to_detail" model="onboarding.skill">
+        <field name="name">Attention to Detail</field>
+        <field name="skill_type">personal</field>
+    </record>
+
+    <record id="skill_time_management" model="onboarding.skill">
+        <field name="name">Time Management</field>
+        <field name="skill_type">personal</field>
+    </record>
+
+    <record id="skill_adaptability" model="onboarding.skill">
+        <field name="name">Adaptability</field>
+        <field name="skill_type">personal</field>
+    </record>
+
+    <record id="skill_reliability" model="onboarding.skill">
+        <field name="name">Reliability</field>
+        <field name="skill_type">personal</field>
+    </record>
+
+    <record id="skill_initiative" model="onboarding.skill">
+        <field name="name">Initiative</field>
+        <field name="skill_type">personal</field>
+    </record>
+
+    <record id="skill_creativity" model="onboarding.skill">
+        <field name="name">Creativity</field>
+        <field name="skill_type">personal</field>
     </record>
 </odoo>

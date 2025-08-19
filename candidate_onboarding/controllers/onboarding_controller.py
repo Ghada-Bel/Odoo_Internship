@@ -36,6 +36,7 @@ class OnboardingController(http.Controller):
                     {'name': 'Availability', 'sequence': 70},
                     {'name': 'References', 'sequence': 80},
                     {'name': 'Documents', 'sequence': 90},
+                    {'name': 'Review', 'sequence': 100},
                 ]
                 for step_data in steps_data:
                     step_data['template_id'] = default_template.id
@@ -74,6 +75,9 @@ class OnboardingController(http.Controller):
                 request.env['onboarding.field'].sudo().create({'name': field_name})
             fields = request.env['onboarding.field'].sudo().search([])
 
+        # Get skills for skills step
+        skills = request.env['onboarding.skill'].sudo().search([])
+
         return request.render('candidate_onboarding.onboarding_main', {
             'onboarding': onboarding,
             'current_step': onboarding.current_step_id,
@@ -84,6 +88,7 @@ class OnboardingController(http.Controller):
             'error': kw.get('error'),
             'countries': countries,
             'fields': fields,
+            'skills': skills,
         })
 
     def _validate_step_data(self, onboarding, post, files):
@@ -192,9 +197,17 @@ class OnboardingController(http.Controller):
             return request.redirect('/onboarding')
 
         files = request.httprequest.files
+        
+        # Handle edit navigation from review step
+        if post.get('edit_step'):
+            step_name = post.get('edit_step')
+            if onboarding.action_go_to_step(step_name):
+                return request.redirect('/onboarding')
+
         try:
-            # Validate the step data
-            self._validate_step_data(onboarding, post, files)
+            # Skip validation for Review step
+            if onboarding.current_step_id and onboarding.current_step_id.name != 'Review':
+                self._validate_step_data(onboarding, post, files)
 
             # Prepare values to update
             vals = {}
@@ -223,6 +236,9 @@ class OnboardingController(http.Controller):
                 'qualification_year': 'qualification_year',
                 'start_date': 'start_date',
                 'notice_period': 'notice_period',
+                'availability_type': 'availability_type',
+                'work_schedule': 'work_schedule',
+                'availability_notes': 'availability_notes',
             }
 
             # Process regular fields
@@ -260,10 +276,25 @@ class OnboardingController(http.Controller):
                     'position': post.get('exp_position', ''),
                     'start_date': post.get('exp_start_date') if post.get('exp_start_date') else None,
                     'end_date': post.get('exp_end_date') if post.get('exp_end_date') else None,
+                    'currently_working': bool(post.get('currently_working')),
                 }
                 # Clear existing and add new
                 onboarding.work_experience_ids.unlink()
                 onboarding.work_experience_ids = [(0, 0, exp_vals)]
+
+            # Handle skills (multiple skill types)
+            skill_assignments = []
+            for skill_type in ['technical', 'interpersonal', 'management', 'cognitive', 'personal']:
+                field_name = f'{skill_type}_skill_ids'
+                if field_name in post:
+                    skill_ids = post.getlist(field_name)
+                    for skill_id in skill_ids:
+                        if skill_id.isdigit():
+                            skill_assignments.append((0, 0, {'skill_id': int(skill_id)}))
+            
+            if skill_assignments:
+                onboarding.skill_ids.unlink()  # Clear existing
+                onboarding.skill_ids = skill_assignments
 
             # Handle references
             if 'ref_name' in post and post['ref_name']:
@@ -271,6 +302,7 @@ class OnboardingController(http.Controller):
                     'name': post['ref_name'],
                     'company': post.get('ref_company', ''),
                     'phone': post.get('ref_phone', ''),
+                    'email': post.get('ref_email', ''),
                 }
                 # Clear existing and add new
                 onboarding.reference_ids.unlink()
@@ -287,6 +319,14 @@ class OnboardingController(http.Controller):
             # Update the onboarding record
             if vals:
                 onboarding.sudo().write(vals)
+
+            # Handle final submission
+            if post.get('submit_application'):
+                onboarding.sudo().write({
+                    'state': 'completed',
+                    'completion_date': fields.Datetime.now(),
+                })
+                return request.redirect('/onboarding/complete')
 
             # Handle step navigation
             if post.get('next_step'):

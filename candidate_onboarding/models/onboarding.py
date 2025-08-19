@@ -68,6 +68,22 @@ class CandidateOnboarding(models.Model):
     # Availability
     start_date = fields.Date(string='Available Start Date')
     notice_period = fields.Integer(string='Notice Period (days)')
+    availability_type = fields.Selection([
+        ('full_time', 'Full Time'),
+        ('part_time', 'Part Time'),
+        ('contract', 'Contract'),
+        ('freelance', 'Freelance'),
+        ('remote', 'Remote'),
+        ('hybrid', 'Hybrid')
+    ], string='Availability Type')
+    work_schedule = fields.Selection([
+        ('day_shift', 'Day Shift (8AM - 5PM)'),
+        ('night_shift', 'Night Shift (6PM - 6AM)'),
+        ('flexible', 'Flexible Hours'),
+        ('weekends', 'Weekends Available'),
+        ('shift_work', 'Shift Work')
+    ], string='Work Schedule')
+    availability_notes = fields.Text(string='Availability Notes')
     
     # References
     reference_ids = fields.One2many('onboarding.reference', 'onboarding_id', string='References')
@@ -160,6 +176,14 @@ class CandidateOnboarding(models.Model):
             # Remove current step from completed if it was completed
             if self.current_step_id.id in self.completed_step_ids.ids:
                 self.completed_step_ids = [(3, self.current_step_id.id)]
+
+    def action_go_to_step(self, step_name):
+        """Navigate to a specific step by name"""
+        step = self.template_id.step_ids.filtered(lambda s: s.name == step_name)
+        if step:
+            self.current_step_id = step[0].id
+            return True
+        return False
 
     @api.constrains('email')
     def _check_email(self):
