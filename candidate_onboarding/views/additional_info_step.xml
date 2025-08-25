@@ -1,6 +1,7 @@
 <odoo>
   <template id="additional_info_step" name="Additional Information Step">
     <div class="step-content">
+      <!-- Header -->
       <div class="row">
         <div class="col-12">
           <h4 class="step-title">Additional Information</h4>
@@ -8,26 +9,35 @@
         </div>
       </div>
       
+      <!-- First Row: Country and Telephone -->
       <div class="row">
-        <!-- Country -->
         <div class="col-md-6 mb-3">
           <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
           <div class="input-group">
             <span class="input-group-text">
               <i class="fas fa-globe"></i>
             </span>
-            <select class="form-select" id="country" name="country" required="true">
+            <select class="form-select" id="country" name="country" required="required">
               <option value="">Select Country</option>
-              <t t-foreach="countries" t-as="country">
-                <option t-att-value="country.id" t-att-selected="'selected' if onboarding.country and onboarding.country.id == country.id else None">
-                  <t t-esc="country.name"/>
-                </option>
+              <t t-if="countries">
+                <t t-foreach="countries" t-as="country">
+                  <option t-att-value="country.id" 
+                          t-att-selected="'selected' if onboarding and onboarding.country and onboarding.country.id == country.id else None">
+                    <t t-esc="country.name"/>
+                  </option>
+                </t>
+              </t>
+              <!-- Fallback options if countries not loaded -->
+              <t t-else="">
+                <option value="263">Zimbabwe</option>
+                <option value="27">South Africa</option>
+                <option value="260">Zambia</option>
+                <option value="267">Botswana</option>
               </t>
             </select>
           </div>
         </div>
         
-        <!-- Telephone -->
         <div class="col-md-6 mb-3">
           <label for="phone" class="form-label">Telephone <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -39,14 +49,14 @@
                    id="phone" 
                    name="phone" 
                    placeholder="+263 896685528"
-                   t-att-value="onboarding.phone or ''" 
-                   required="true"/>
+                   t-att-value="onboarding.phone if onboarding and onboarding.phone else ''" 
+                   required="required"/>
           </div>
         </div>
       </div>
       
+      <!-- Second Row: Physical Address and Citizenship -->
       <div class="row">
-        <!-- Physical Address -->
         <div class="col-md-6 mb-3">
           <label for="physical_address" class="form-label">Physical Address <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -58,11 +68,10 @@
                       name="physical_address" 
                       placeholder="5857850 hataro tower"
                       rows="3" 
-                      required="true"><t t-esc="onboarding.physical_address or ''"/></textarea>
+                      required="required"><t t-esc="onboarding.physical_address if onboarding and onboarding.physical_address else ''"/></textarea>
           </div>
         </div>
         
-        <!-- Citizenship -->
         <div class="col-md-6 mb-3">
           <label for="citizenship" class="form-label">Citizenship <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -74,14 +83,14 @@
                    id="citizenship" 
                    name="citizenship" 
                    placeholder="Zimbabwean"
-                   t-att-value="onboarding.citizenship or ''" 
-                   required="true"/>
+                   t-att-value="onboarding.citizenship if onboarding and onboarding.citizenship else ''" 
+                   required="required"/>
           </div>
         </div>
       </div>
       
+      <!-- Third Row: Birthplace and Field -->
       <div class="row">
-        <!-- Birthplace -->
         <div class="col-md-6 mb-3">
           <label for="birthplace" class="form-label">Birthplace <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -93,51 +102,65 @@
                    id="birthplace" 
                    name="birthplace" 
                    placeholder="Makoni"
-                   t-att-value="onboarding.birthplace or ''" 
-                   required="true"/>
+                   t-att-value="onboarding.birthplace if onboarding and onboarding.birthplace else ''" 
+                   required="required"/>
           </div>
         </div>
         
-        <!-- Field -->
         <div class="col-md-6 mb-3">
           <label for="field_id" class="form-label">Field <span class="text-danger">*</span></label>
           <div class="input-group">
             <span class="input-group-text">
               <i class="fas fa-briefcase"></i>
             </span>
-            <select class="form-select" id="field_id" name="field_id" required="true">
+            <select class="form-select" id="field_id" name="field_id" required="required">
               <option value="">Select Field</option>
-              <t t-foreach="fields" t-as="field">
-                <option t-att-value="field.id" t-att-selected="'selected' if onboarding.field_id and onboarding.field_id.id == field.id else None">
-                  <t t-esc="field.name"/>
-                </option>
+              <t t-if="fields">
+                <t t-foreach="fields" t-as="field">
+                  <option t-att-value="field.id" 
+                          t-att-selected="'selected' if onboarding and onboarding.field_id and onboarding.field_id.id == field.id else None">
+                    <t t-esc="field.name"/>
+                  </option>
+                </t>
+              </t>
+              <!-- Fallback options if fields not loaded -->
+              <t t-else="">
+                <option value="1">Education &amp; Training</option>
+                <option value="2">Information Technology</option>
+                <option value="3">Engineering</option>
+                <option value="4">Healthcare</option>
+                <option value="5">Business &amp; Management</option>
+                <option value="6">Agriculture</option>
+                <option value="7">Other</option>
               </t>
             </select>
           </div>
         </div>
       </div>
       
+      <!-- Fourth Row: Occupation and Next of Kin -->
       <div class="row">
-        <!-- Occupation -->
         <div class="col-md-6 mb-3">
           <label for="occupation" class="form-label">Occupation <span class="text-danger">*</span></label>
           <div class="input-group">
             <span class="input-group-text">
               <i class="fas fa-user-tie"></i>
             </span>
-            <select class="form-select" id="occupation" name="occupation" required="true">
+            <select class="form-select" id="occupation" name="occupation" required="required">
               <option value="">Select Occupation</option>
-              <option value="teacher" t-att-selected="'selected' if onboarding.occupation == 'teacher' else None">Primary School Teacher</option>
-              <option value="developer" t-att-selected="'selected' if onboarding.occupation == 'developer' else None">Software Developer</option>
-              <option value="manager" t-att-selected="'selected' if onboarding.occupation == 'manager' else None">Manager</option>
-              <option value="analyst" t-att-selected="'selected' if onboarding.occupation == 'analyst' else None">Analyst</option>
-              <option value="consultant" t-att-selected="'selected' if onboarding.occupation == 'consultant' else None">Consultant</option>
-              <option value="other" t-att-selected="'selected' if onboarding.occupation == 'other' else None">Other</option>
+              <option value="teacher" t-att-selected="'selected' if onboarding and onboarding.occupation == 'teacher' else None">Primary School Teacher</option>
+              <option value="developer" t-att-selected="'selected' if onboarding and onboarding.occupation == 'developer' else None">Software Developer</option>
+              <option value="manager" t-att-selected="'selected' if onboarding and onboarding.occupation == 'manager' else None">Manager</option>
+              <option value="analyst" t-att-selected="'selected' if onboarding and onboarding.occupation == 'analyst' else None">Analyst</option>
+              <option value="consultant" t-att-selected="'selected' if onboarding and onboarding.occupation == 'consultant' else None">Consultant</option>
+              <option value="nurse" t-att-selected="'selected' if onboarding and onboarding.occupation == 'nurse' else None">Nurse</option>
+              <option value="engineer" t-att-selected="'selected' if onboarding and onboarding.occupation == 'engineer' else None">Engineer</option>
+              <option value="accountant" t-att-selected="'selected' if onboarding and onboarding.occupation == 'accountant' else None">Accountant</option>
+              <option value="other" t-att-selected="'selected' if onboarding and onboarding.occupation == 'other' else None">Other</option>
             </select>
           </div>
         </div>
         
-        <!-- Next of Kin -->
         <div class="col-md-6 mb-3">
           <label for="next_of_kin" class="form-label">Next of Kin <span class="text-danger">*</span></label>
           <div class="input-group">
@@ -149,8 +172,8 @@
                    id="next_of_kin" 
                    name="next_of_kin" 
                    placeholder="Phillips"
-                   t-att-value="onboarding.next_of_kin or ''" 
-                   required="true"/>
+                   t-att-value="onboarding.next_of_kin if onboarding and onboarding.next_of_kin else ''" 
+                   required="required"/>
           </div>
         </div>
       </div>
